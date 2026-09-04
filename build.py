@@ -706,7 +706,7 @@ def build_baza():
   <section class="page-hero page-hero--figure">
     <div class="page-hero__scrim" style="background:var(--ink)"></div>
     <div class="container page-hero__grid"
-         style="--figure-w:520px;--figure-min-h:clamp(300px,40vh,420px);--figure-h:calc(var(--figure-min-h) + 100px);--figure-shift:-240px">
+         style="--figure-w:520px;--figure-min-h:clamp(300px,40vh,420px);--figure-h:calc(var(--figure-min-h) + 100px)">
       <div class="page-hero__inner reveal">
         <p class="kicker kicker--light">Hospicjum domowe</p>
         <h1>Baza wiedzy o Hospicjum</h1>
