@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JANMED - system wizualny</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="../css/styles.css">
+<style>
+/* Storybook czyta produkcyjny arkusz. Poniżej wyłącznie rusztowanie strony
+   z przykładami - żadnych nowych wartości designu. */
+body { background: var(--bg); }
+
+.sb-head {
+  background: var(--ink); color: var(--on-dark-2);
+  padding: clamp(48px, 7vw, 88px) 0 clamp(40px, 5vw, 64px);
+}
+.sb-head h1 { color: #fff; }
+.sb-head p { max-width: 62ch; }
+.sb-nav { display: flex; flex-wrap: wrap; gap: 8px 10px; margin-top: 30px; }
+.sb-nav a {
+  padding: 7px 14px; border: 1px solid var(--line-dark); border-radius: var(--r-pill);
+  font-size: 0.75rem; color: var(--on-dark-2); text-decoration: none;
+}
+.sb-nav a:hover { color: #fff; border-color: #fff; }
+
+.sb { padding-block: clamp(48px, 6vw, 80px); border-bottom: 1px solid var(--line); }
+.sb:last-child { border-bottom: 0; }
+.sb > .container > h2 {
+  font-size: 1.5rem; letter-spacing: -0.022em; margin-bottom: 8px;
+  scroll-margin-top: 24px;
+}
+.sb__lead { color: var(--muted); font-size: 0.9375rem; max-width: 70ch; margin: 0 0 34px; }
+
+.sb-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+.sb-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.sb-stack { display: grid; gap: 26px; }
+
+.sb-label {
+  font-family: "Poppins", sans-serif; font-size: 0.6875rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin: 0 0 12px;
+}
+
+/* próbki koloru */
+.sw { border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; background: var(--surface); }
+.sw__chip { height: 76px; }
+.sw__meta { padding: 12px 14px; font-size: 0.75rem; line-height: 1.5; }
+.sw__meta b { display: block; font-family: "Poppins", sans-serif; font-weight: 500;
+              font-size: 0.8125rem; color: var(--ink); letter-spacing: -0.01em; }
+.sw__meta code { color: var(--muted); }
+.sw__ratio { display: inline-block; margin-top: 6px; padding: 2px 7px; border-radius: var(--r-pill);
+             font-size: 0.6875rem; font-weight: 500; }
+.sw__ratio.pass { background: #e6f4ec; color: #1b6b43; }
+.sw__ratio.warn { background: #fdf0e3; color: #8a5a12; }
+.sw__ratio.fail { background: #fde8ee; color: #a81845; }
+
+/* siatka typografii */
+.type-row { display: grid; grid-template-columns: 150px 1fr; gap: 18px; align-items: baseline;
+            padding: 16px 0; border-top: 1px solid var(--line); }
+.type-row:first-child { border-top: 0; }
+.type-row dt { font-size: 0.75rem; color: var(--muted); font-family: "Poppins", sans-serif; }
+.type-row dd { margin: 0; }
+.type-row code { display: block; margin-top: 6px; font-size: 0.6875rem; color: var(--muted); }
+
+/* skala odstępów */
+.space { display: grid; gap: 10px; }
+.space div { display: flex; align-items: center; gap: 14px; font-size: 0.75rem; color: var(--muted); }
+.space i { display: block; height: 14px; background: var(--blue-tint);
+           box-shadow: inset 0 0 0 1px var(--blue-mid); border-radius: 3px; }
+
+/* pudełka demonstracyjne */
+.demo { padding: 26px; border: 1px dashed var(--line-2); border-radius: var(--r-card); background: var(--surface); }
+.demo--dark { background: var(--ink); border-color: var(--line-dark); }
+
+.dont { border-left: 3px solid var(--crimson); padding-left: 16px; margin-top: 26px; }
+.dont p { margin: 0 0 6px; font-size: 0.875rem; }
+.dont b { color: var(--crimson); }
+</style>
+</head>
+<body>
+
+<header class="sb-head">
+  <div class="container">
+    <p class="kicker kicker--light">System wizualny</p>
+    <h1 class="h-section">JANMED - jeden arkusz, jedna prawda</h1>
+    <p class="lede" style="color:var(--on-dark-2);margin-top:18px">
+      Ta strona nie ma własnych stylów. Czyta <code>css/styles.css</code>, ten sam,
+      z którego korzysta produkcja - jeśli coś tu wygląda inaczej niż na stronie,
+      to znaczy, że ktoś nadpisał styl lokalnie i trzeba to cofnąć.
+      Zasady słowne: <a href="design.md" style="color:var(--blue-light)">design.md</a>.
+    </p>
+    <nav class="sb-nav">
+      <a href="#kolor">Kolor</a>
+      <a href="#typografia">Typografia</a>
+      <a href="#przestrzen">Przestrzeń</a>
+      <a href="#ksztalt">Kształt i głębia</a>
+      <a href="#przyciski">Przyciski</a>
+      <a href="#karty">Karty</a>
+      <a href="#ikony">Ikony</a>
+      <a href="#tresc">Treść</a>
+      <a href="#sekcje">Sekcje</a>
+      <a href="#ruch">Ruch</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ═══════════════════ KOLOR ═══════════════════ -->
+<section class="sb" id="kolor">
+  <div class="container">
+    <h2>Kolor</h2>
+    <p class="sb__lead">
+      Wszystkie wartości pochodzą z pomiaru oryginalnej strony (zmienne globalne
+      Elementora), poza <code>--blue</code>, który jest przyciemnioną wersją koloru
+      marki - oryginał dawał 3.29:1 z bielą i nie nadawał się na tekst.
+      Współczynniki policzone wg WCAG 2.1, próg AA dla tekstu to 4.5:1.
+    </p>
+
+    <p class="sb-label">Podstawa</p>
+    <div class="sb-grid">
+      <div class="sw"><div class="sw__chip" style="background:var(--ink)"></div>
+        <div class="sw__meta"><b>--ink</b><code>#001A25</code>
+          <span class="sw__ratio pass">17.1:1 na tle</span>
+          <p style="margin:8px 0 0">Nagłówki, ciemne sekcje, stopka. Czerń tonowana morsko - nigdy czyste #000.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--body)"></div>
+        <div class="sw__meta"><b>--body</b><code>#41565F</code>
+          <span class="sw__ratio pass">7.4:1</span>
+          <p style="margin:8px 0 0">Tekst czytany. Domyślny kolor <code>body</code>.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--muted)"></div>
+        <div class="sw__meta"><b>--muted</b><code>#5F757F</code>
+          <span class="sw__ratio pass">4.6:1</span>
+          <p style="margin:8px 0 0">Tekst drugorzędny, podpisy, lead. Nie schodzić niżej.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--bg);box-shadow:inset 0 0 0 1px var(--line)"></div>
+        <div class="sw__meta"><b>--bg</b><code>#FAFAF9</code>
+          <p style="margin:8px 0 0">Tło strony. Off-white, nie czysta biel.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)"></div>
+        <div class="sw__meta"><b>--surface</b><code>#FFFFFF</code>
+          <p style="margin:8px 0 0">Karty i pola - biel tylko jako warstwa nad tłem.</p></div></div>
+    </div>
+
+    <p class="sb-label" style="margin-top:36px">Akcenty</p>
+    <div class="sb-grid">
+      <div class="sw"><div class="sw__chip" style="background:var(--crimson)"></div>
+        <div class="sw__meta"><b>--crimson</b><code>#D32359</code>
+          <span class="sw__ratio pass">5.1:1 z bielą</span>
+          <p style="margin:8px 0 0"><b>Wyłącznie CTA.</b> Jeden karmazyn na ekran. Nigdy jako tło sekcji.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--crimson-deep)"></div>
+        <div class="sw__meta"><b>--crimson-deep</b><code>#B01D49</code>
+          <p style="margin:8px 0 0">Stan hover przycisku podstawowego.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--blue)"></div>
+        <div class="sw__meta"><b>--blue</b><code>#2C6A87</code>
+          <span class="sw__ratio pass">6.0:1</span>
+          <p style="margin:8px 0 0">Linki, kickery na jasnym, tekst akcentowany.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--blue-mid)"></div>
+        <div class="sw__meta"><b>--blue-mid</b><code>#4597BA</code>
+          <span class="sw__ratio fail">3.3:1 - nie na tekst</span>
+          <p style="margin:8px 0 0">Tylko plamy dekoracyjne: skos w hero, punktory, poświaty.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--blue-light)"></div>
+        <div class="sw__meta"><b>--blue-light</b><code>#6EC1E4</code>
+          <span class="sw__ratio pass">8.9:1 na ink</span>
+          <p style="margin:8px 0 0">Kickery i akcenty <b>tylko na ciemnym tle</b>.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--cyan)"></div>
+        <div class="sw__meta"><b>--cyan</b><code>#2AD4FF</code>
+          <p style="margin:8px 0 0">Kolor logo. Ikony wartości i punktory w hero - nic więcej.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--blue-tint)"></div>
+        <div class="sw__meta"><b>--blue-tint</b><code>#EDF4F7</code>
+          <p style="margin:8px 0 0">Tło zaznaczenia, etykiety potwierdzeń, wypełnienia punktorów.</p></div></div>
+    </div>
+
+    <p class="sb-label" style="margin-top:36px">Linie</p>
+    <div class="sb-grid">
+      <div class="sw"><div class="sw__chip" style="background:var(--line)"></div>
+        <div class="sw__meta"><b>--line</b><code>#E4E9EB</code>
+          <p style="margin:8px 0 0">Hairline 1px - główny budulec struktury zamiast cieni.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--line-2)"></div>
+        <div class="sw__meta"><b>--line-2</b><code>#CFD9DD</code>
+          <p style="margin:8px 0 0">Obramowania przycisków pobocznych, linie przerywane.</p></div></div>
+      <div class="sw"><div class="sw__chip" style="background:var(--ink);position:relative">
+          <span style="position:absolute;inset:24px 14px auto;height:1px;background:var(--line-dark)"></span></div>
+        <div class="sw__meta"><b>--line-dark</b><code>rgba(255,255,255,.12)</code>
+          <p style="margin:8px 0 0">Linia na ciemnym tle - biel na niskim kryciu, nigdy szary solid.</p></div></div>
+    </div>
+
+    <div class="dont">
+      <p><b>Nie:</b> karmazyn jako tło sekcji ani jako kolor tekstu w akapicie.</p>
+      <p><b>Nie:</b> <code>--blue-mid</code> pod tekstem - nie przechodzi AA.</p>
+      <p><b>Nie:</b> gradienty wielobarwne. Jeśli gradient, to jeden odcień razy jasność.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TYPOGRAFIA ═══════════════════ -->
+<section class="sb" id="typografia">
+  <div class="container">
+    <h2>Typografia</h2>
+    <p class="sb__lead">
+      Dwa kroje, oba self-hostowane. <b>Poppins</b> to display i interfejs,
+      <b>Inter</b> to wszystko, co się czyta dłużej niż trzy słowa.
+      Nagłówki mają zawsze ujemny letter-spacing - to najsilniejszy pojedynczy
+      sygnał, że strona nie jest domyślna.
+    </p>
+
+    <dl style="margin:0">
+      <div class="type-row"><dt>.h-hero</dt>
+        <dd><span class="h-hero" style="display:block">Otoczymy opieką</span>
+          <code>clamp(2.35rem, 1.2rem + 4.4vw, 4rem) / 600 / -0.032em / LH 1.03</code></dd></div>
+      <div class="type-row"><dt>.h-section</dt>
+        <dd><span class="h-section" style="display:block">Nasze wartości</span>
+          <code>clamp(1.9rem, 1.1rem + 2.6vw, 2.75rem) / 600 / -0.028em / LH 1.07</code></dd></div>
+      <div class="type-row"><dt>.h-card</dt>
+        <dd><span class="h-card" style="display:block">Hospicjum Domowe Olkusz</span>
+          <code>1.25rem / 600 / -0.018em / LH 1.3</code></dd></div>
+      <div class="type-row"><dt>.kicker</dt>
+        <dd><span class="kicker" style="display:block;margin:0">Choroby kwalifikujące</span>
+          <code>0.8125rem / 500 / +0.14em / uppercase / Poppins</code></dd></div>
+      <div class="type-row"><dt>.lede</dt>
+        <dd><span class="lede" style="display:block">Odpowiedzi na pytania, które najczęściej słyszymy od rodzin pacjentów.</span>
+          <code>clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem) / LH 1.65 / --muted</code></dd></div>
+      <div class="type-row"><dt>body</dt>
+        <dd><span style="display:block">Bezpłatna opieka lekarska, pielęgniarska oraz rehabilitacyjna nad nieuleczalnie chorymi osobami.</span>
+          <code>17px / 400 / LH 1.7 / Inter / --body</code></dd></div>
+    </dl>
+
+    <div class="dont">
+      <p><b>Nie:</b> nagłówek z <code>letter-spacing: 0</code>. Zawsze ujemny, od −1.8% do −3.4%.</p>
+      <p><b>Nie:</b> Poppins w akapicie dłuższym niż jedno zdanie - to krój do patrzenia, nie do czytania.</p>
+      <p><b>Nie:</b> trzeci krój. Jeśli czegoś brakuje, gra się wagą i rozmiarem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PRZESTRZEŃ ═══════════════════ -->
+<section class="sb" id="przestrzen">
+  <div class="container">
+    <h2>Przestrzeń</h2>
+    <p class="sb__lead">
+      Odstęp pionowy jest głównym narzędziem hierarchii. Jeśli wahasz się między
+      ciaśniej a luźniej - luźniej.
+    </p>
+    <div class="space">
+      <div><i style="width:1120px;max-width:100%"></i><span><code>--container</code> 1120px - maksymalna szerokość treści</span></div>
+      <div><i style="width:720px;max-width:100%"></i><span><code>--prose</code> 720px - kolumna tekstu artykułu</span></div>
+      <div><i style="width:128px"></i><span><code>--section</code> clamp(72px, 9vw, 128px) - odstęp pionowy sekcji</span></div>
+      <div><i style="width:40px"></i><span><code>--gutter</code> clamp(20px, 4vw, 40px) - margines boczny</span></div>
+      <div><i style="width:76px"></i><span><code>--header-h</code> 76px desktop / 68px mobile</span></div>
+    </div>
+    <div class="dont">
+      <p><b>Nie:</b> sekcje co 40px. To wygląda jak strona z buildera i tak właśnie wyglądała poprzednia.</p>
+      <p><b>Nie:</b> treść rozlana na całą szerokość ekranu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ KSZTAŁT ═══════════════════ -->
+<section class="sb" id="ksztalt">
+  <div class="container">
+    <h2>Kształt i głębia</h2>
+    <p class="sb__lead">
+      Jedna szkoła zaokrągleń: miękka. Głębia głównie przez hairline'y; cienie są
+      bardzo niskiego krycia i mają bazę tonowaną w <code>--ink</code>, nigdy w czerni.
+    </p>
+    <div class="sb-grid">
+      <div class="demo" style="border-radius:var(--r-card);border-style:solid">
+        <p class="sb-label" style="margin:0">--r-card 14px</p><p style="margin:8px 0 0;font-size:.875rem">Karty, panele, ramki obrazów</p></div>
+      <div class="demo" style="border-radius:var(--r-sm);border-style:solid">
+        <p class="sb-label" style="margin:0">--r-sm 10px</p><p style="margin:8px 0 0;font-size:.875rem">Obrazy w treści, małe pola</p></div>
+      <div class="demo" style="border-radius:var(--r-btn);border-style:solid">
+        <p class="sb-label" style="margin:0">--r-btn 8px</p><p style="margin:8px 0 0;font-size:.875rem">Przyciski, logo-chipy</p></div>
+      <div class="demo" style="border-radius:var(--r-pill);border-style:solid">
+        <p class="sb-label" style="margin:0">--r-pill 999px</p><p style="margin:8px 0 0;font-size:.875rem">Etykiety, odznaki</p></div>
+    </div>
+
+    <p class="sb-label" style="margin-top:34px">Cienie</p>
+    <div class="sb-grid">
+      <div class="demo" style="border:0;box-shadow:var(--sh-1)">
+        <p class="sb-label" style="margin:0">--sh-1</p>
+        <p style="margin:8px 0 0;font-size:.8125rem">Karta w spoczynku</p></div>
+      <div class="demo" style="border:0;box-shadow:var(--sh-2)">
+        <p class="sb-label" style="margin:0">--sh-2</p>
+        <p style="margin:8px 0 0;font-size:.8125rem">Karta pod kursorem, pasek cookies</p></div>
+      <div class="demo" style="border:0;box-shadow:var(--sh-3)">
+        <p class="sb-label" style="margin:0">--sh-3</p>
+        <p style="margin:8px 0 0;font-size:.8125rem">Element unoszący się nad treścią</p></div>
+    </div>
+    <div class="dont">
+      <p><b>Nie:</b> cień z czystej czerni albo kryciem powyżej 0.10 na jasnym tle.</p>
+      <p><b>Nie:</b> trzy różne promienie na jednym ekranie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ PRZYCISKI ═══════════════════ -->
+<section class="sb" id="przyciski">
+  <div class="container">
+    <h2>Przyciski</h2>
+    <p class="sb__lead">
+      Wielkość liter, waga 600, tracking +0.075em. Na ekranie może być tylko jeden
+      karmazynowy przycisk w danym kontekście - to jest ta jedna rzecz,
+      którą chcemy, żeby człowiek zrobił.
+    </p>
+    <div class="sb-stack">
+      <div>
+        <p class="sb-label">Na jasnym tle</p>
+        <div class="sb-row">
+          <a class="btn" href="#przyciski">Zgłoś pacjenta</a>
+          <a class="btn btn--ghost" href="#przyciski">Jak się dostać?</a>
+          <a class="btn btn--blue" href="#przyciski">Wariant niebieski</a>
+          <a class="btn btn--sm" href="#przyciski">Mały</a>
+          <span class="copy-wrap">
+            <button class="btn btn--ghost copy-btn" type="button" data-copy="biuro@janmed.pl">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.25" y="5.25" width="8" height="8" rx="1.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.75 2.75H4.5a1.75 1.75 0 0 0-1.75 1.75v6.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>biuro@janmed.pl</span></button>
+            <span class="copy-note is-on"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.2 11.7 13 4.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Skopiowano adres e-mail</span></span>
+          </span>
+        </div>
+      </div>
+      <div class="demo demo--dark">
+        <p class="sb-label" style="color:var(--on-dark-2)">Na ciemnym tle - poboczny się odwraca</p>
+        <div class="sb-row">
+          <a class="btn" href="#przyciski">Zgłoś pacjenta</a>
+          <a class="btn btn--ghost-light" href="#przyciski">Jak się dostać?</a>
+          <span class="copy-wrap">
+            <button class="btn btn--ghost-light copy-btn" type="button" data-copy="biuro@janmed.pl">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="5.25" y="5.25" width="8" height="8" rx="1.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.75 2.75H4.5a1.75 1.75 0 0 0-1.75 1.75v6.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span>biuro@janmed.pl</span></button>
+            <span class="copy-note" role="status"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="dont">
+      <p><b>Nie:</b> dwa karmazynowe przyciski obok siebie.</p>
+      <p><b>Nie:</b> <code>btn--ghost</code> na ciemnym tle - jest wtedy nieczytelny, użyj <code>btn--ghost-light</code>.</p>
+      <p><b>Nie:</b> osobny przycisk „Wyślij e-mail" obok adresu - adres <em>jest</em> przyciskiem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ KARTY ═══════════════════ -->
+<section class="sb" id="karty">
+  <div class="container">
+    <h2>Karty</h2>
+    <p class="sb__lead">Trzy typy w użyciu. Wszystkie dzielą promień, hairline i cień.</p>
+    <div class="sb-stack">
+      <div>
+        <p class="sb-label">Karta kontaktu</p>
+        <div class="contact-grid">
+          <div class="card card--contact">
+            <h3 class="h-card">Hospicjum Domowe<span>Olkusz</span></h3>
+            <address>Króla Kazimierza Wielkiego 64<br>32-300 Olkusz
+              <a class="phone" href="tel:+48698887816">tel: 698-887-816</a>
+              <span class="label">Hospicjum Olkusz</span>
+              <span class="hours">informacja i rejestracja: 8:00-15:00</span>
+            </address>
+          </div>
+          <div class="card">
+            <h3 class="h-card">Karta neutralna</h3>
+            <p style="margin:10px 0 0;font-size:.9375rem;color:var(--muted)">
+              Bazowa <code>.card</code> bez modyfikatora - biel, hairline, <code>--sh-1</code>.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="sb-label">Kafel choroby (na ciemnym)</p>
+        <div class="disease-grid" style="max-width:560px">
+          <div class="disease"><p class="disease__code">C00-D48</p><p class="disease__name">Nowotwory</p></div>
+          <div class="disease"><p class="disease__code">G35</p><p class="disease__name">Stwardnienie rozsiane</p></div>
+        </div>
+      </div>
+      <div>
+        <p class="sb-label">Karta oferty pracy - wiersz, nie kafelek ze zdjęciem</p>
+        <div class="job-list">
+          <a class="job-card is-in" href="#karty">
+            <div>
+              <h2>Lekarz w hospicjum domowym</h2>
+              <p>Wizyty domowe u pacjentów objętych opieką paliatywną.</p>
+              <ul class="chips">
+                <li class="chip">Olkusz, Pińczów, Kazimierza Wielka</li>
+                <li class="chip">Umowa zlecenie lub kontrakt (B2B)</li>
+              </ul>
+            </div>
+            <span class="job-card__more">Zobacz ofertę
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </a>
+        </div>
+        <div class="aside__card" style="max-width:320px;margin-top:20px">
+          <h3>Fakty w panelu bocznym</h3>
+          <dl class="facts">
+            <div><dt>Miejsce</dt><dd>Olkusz, Pińczów, Kazimierza Wielka</dd></div>
+            <div><dt>Forma współpracy</dt><dd>Umowa zlecenie lub kontrakt (B2B)</dd></div>
+          </dl>
+          <a class="btn" href="#karty">Aplikuj</a>
+        </div>
+      </div>
+      <div>
+        <p class="sb-label">Karta wpisu</p>
+        <div class="post-grid" style="max-width:340px">
+          <a class="post-card is-in" href="#karty">
+            <div class="post-card__media" style="background:var(--blue-tint)"></div>
+            <div class="post-card__body">
+              <h3>Czy hospicjum zabiera emeryturę?</h3>
+              <p>Opieka hospicyjna nie zabiera emerytury pacjenta.</p>
+              <span class="post-card__more">Czytaj więcej
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ IKONY ═══════════════════ -->
+<section class="sb" id="ikony">
+  <div class="container">
+    <h2>Ikony</h2>
+    <p class="sb__lead">
+      Cztery ikony wartości są wzorcem dla wszystkich kolejnych: wypełnienia zamiast
+      konturów, rysunek wpisany w kwadrat 42-48 px, kolor główny z <code>currentColor</code>
+      i dokładnie jeden element w akcencie <code>var(--icon-accent, #2AD4FF)</code>.
+    </p>
+    <div class="values">
+          <div class="value">
+            <div class="value__icon"><svg aria-hidden="true" focusable="false" fill="none" height="44" viewbox="0 0 48 44" width="48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M13.495 8.04102C8.545 12.453 3.485 17.281 2.25 18.77C1.015 20.26 0.00300375 22.002 3.74873e-06 22.641C-0.00299625 23.28 1.795 24.107 3.995 24.479L7.995 25.155L8.01 32.317C8.019 36.256 8.356 39.974 8.76 40.579C9.164 41.184 10.478 42.197 11.679 42.829C12.881 43.462 17.876 43.979 22.78 43.979C27.684 43.979 33.059 43.504 34.724 42.924C37.154 42.076 37.872 41.14 38.362 38.174C38.698 36.142 38.979 32.454 38.986 29.979C38.999 25.504 39.019 25.478 42.713 25.213C44.756 25.066 46.878 24.496 47.428 23.946C48.096 23.278 44.615 19.121 36.978 11.462C30.68 5.14602 24.845 -0.0119791 24.011 2.0896e-05C23.177 0.0110209 18.445 3.63002 13.495 8.04102ZM34.995 12.979L45.495 22.906L41.389 22.943L37.283 22.979L36.597 31.196C36.212 35.814 35.383 39.749 34.704 40.18C34.039 40.603 28.915 40.955 23.316 40.964C15.188 40.976 12.806 40.648 11.493 39.334C10.195 38.036 9.916 36.134 10.171 30.331L10.495 22.974L7.304 22.977C5.549 22.978 3.851 22.555 3.531 22.036C3.21 21.518 7.571 17.031 13.221 12.066C18.872 7.10002 23.72 3.04102 23.995 3.04502C24.27 3.04902 29.22 7.51902 34.995 12.979Z" fill="currentColor" fill-rule="evenodd"></path><path d="M16.653 33.938C16.985 32.277 18.384 30.032 19.761 28.948C21.138 27.865 22.408 26.979 22.583 26.979C22.758 26.979 23.997 27.479 25.338 28.089C26.678 28.7 28.274 30.296 28.885 31.636C29.495 32.977 29.995 35.402 29.995 37.026C29.995 38.65 29.545 39.979 28.995 39.979C28.445 39.979 27.995 38.729 27.995 37.202C27.995 35.674 27.294 33.424 26.438 32.202C25.582 30.979 23.984 29.979 22.887 29.979C21.559 29.979 20.412 31.13 19.454 33.423C18.662 35.317 18.284 37.567 18.612 38.423C18.94 39.279 18.759 39.979 18.209 39.979C17.659 39.979 16.948 39.299 16.629 38.468C16.31 37.637 16.321 35.598 16.653 33.938Z" fill="var(--icon-accent, #2AD4FF)"></path></svg></div>
+            <h3 class="h-card">Poczucie sensu</h3>
+            <p><code>templates/icons/sens.svg</code></p>
+          </div>
+          <div class="value">
+            <div class="value__icon"><svg aria-hidden="true" focusable="false" fill="none" height="48" viewbox="0 0 42 48" width="42" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M6.49277 32.6789C5.75577 34.2169 4.25577 35.6369 3.15977 35.8349C2.06477 36.0319 0.739769 36.5999 0.217769 37.0969C-0.361231 37.6469 0.236769 37.9999 1.74477 37.9999C3.10777 37.9999 5.22277 37.2989 6.44477 36.4429C7.66777 35.5869 8.66777 34.2369 8.66777 33.4429C8.66777 32.6489 9.11777 31.9999 9.66777 31.9999C10.2178 31.9999 10.6748 33.0129 10.6828 34.2499C10.6918 35.4869 11.1258 37.1749 11.6478 37.9999C12.3898 39.1709 14.8018 39.4999 22.6338 39.4999C28.1528 39.4999 32.6688 39.8219 32.6678 40.2149C32.6678 40.6079 31.8228 41.3819 30.7898 41.9349C29.7568 42.4869 23.9268 43.4099 17.8338 43.9839C11.7408 44.5589 6.06077 45.2959 5.21177 45.6219C4.36277 45.9469 3.66777 46.6639 3.66777 47.2139C3.66777 47.8009 4.39077 47.8869 5.41777 47.4229C6.38077 46.9879 12.3928 46.3569 18.7778 46.0219C27.3078 45.5749 31.0888 44.9539 33.0278 43.6839C34.9028 42.4549 35.6678 41.0909 35.6678 38.9769C35.6678 36.7999 35.1938 35.9999 33.9048 35.9999C32.9358 35.9999 31.6978 34.9899 31.1548 33.7559C30.6118 32.5219 29.3908 31.3659 28.4408 31.1869C27.4918 31.0079 25.2038 32.0149 23.3578 33.4229C21.5118 34.8309 18.6018 36.2629 16.8918 36.6049C14.0138 37.1809 13.7198 36.9779 12.9168 33.8629C12.3238 31.5629 11.3828 30.4019 9.94177 30.1909C8.45277 29.9729 7.43877 30.7049 6.49277 32.6789ZM29.1248 34.9309C29.4418 35.4429 29.3558 36.0649 28.9338 36.3129C28.5128 36.5619 26.5928 37.0989 24.6678 37.5079L21.1678 38.2519L23.6678 36.1589C25.0428 35.0079 26.7038 34.0519 27.3588 34.0329C28.0138 34.0149 28.8088 34.4189 29.1248 34.9309Z" fill="currentColor" fill-rule="evenodd"></path><path clip-rule="evenodd" d="M29.2698 2.30688C28.0017 3.57593 26.7607 5.21997 26.5148 5.95996C26.1927 6.92505 25.3127 6.55396 23.4117 4.65308C21.7028 2.94409 19.6758 2 17.7128 2C16.0007 2 13.7917 2.87598 12.6677 4C11.3688 5.29907 10.6677 7.33301 10.6677 9.80298C10.6677 12.4551 11.5757 14.8401 13.6658 17.6831C15.3147 19.925 18.1277 22.874 19.9158 24.2361C21.7047 25.5979 24.1868 27.0339 25.4327 27.428C26.9897 27.9199 28.8177 27.4519 31.2787 25.9319C33.2477 24.7141 36.1558 21.929 37.7397 19.741C39.3247 17.554 40.9067 14.2451 41.2548 12.3889C41.6028 10.532 41.6017 7.87402 41.2527 6.48096C40.9027 5.08911 39.7288 3.06104 38.6427 1.9751C37.5568 0.888916 35.5227 0 34.1227 0C32.7228 0 30.5387 1.03809 29.2698 2.30688ZM38.4547 6.229C39.4528 8.32202 39.5037 9.89697 38.6697 12.9919C38.0728 15.2109 36.2968 18.4829 34.7238 20.2629C33.1508 22.043 30.5157 24.2859 28.8688 25.2458L25.8738 26.991L20.7297 22.366C17.8998 19.821 14.9287 16.4709 14.1257 14.9199C13.3237 13.3679 12.6677 11.022 12.6677 9.70483C12.6677 8.38794 13.5358 6.5249 14.5957 5.56494C15.8457 4.43384 17.2677 4.05591 18.6348 4.48901C19.7947 4.85791 21.9077 6.91602 23.3287 9.06299C24.7488 11.21 26.2567 12.7539 26.6787 12.4929C27.1007 12.2319 27.7557 10.7769 28.1348 9.25903C28.5137 7.74194 29.5527 5.69092 30.4437 4.70288C31.3937 3.64893 33.1157 3.02783 34.6077 3.20288C36.2228 3.39087 37.6287 4.49683 38.4547 6.229Z" fill="var(--icon-accent, #2AD4FF)" fill-rule="evenodd"></path></svg></div>
+            <h3 class="h-card">Szacunek</h3>
+            <p><code>templates/icons/szacunek.svg</code></p>
+          </div>
+          <div class="value">
+            <div class="value__icon"><svg aria-hidden="true" focusable="false" fill="none" height="48" viewbox="0 0 46 48" width="46" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M19.18 10.642C18.675 11.545 18.48 13.12 18.747 14.142C19.015 15.164 19.824 16 20.545 16C21.267 16 22.564 16.707 23.429 17.571C24.293 18.436 25 19.508 25 19.955C25 20.401 24.1 21.002 23 21.29C21.803 21.603 21 22.654 21 23.906C21 25.058 20.55 26 20 26C19.45 26 18.098 26.902 16.995 28.005C15.308 29.692 14.675 29.814 13.014 28.777C11.928 28.098 10.815 26.961 10.542 26.249C10.269 25.538 11.663 23.165 13.639 20.978C16.079 18.277 16.737 17 15.689 17C14.84 17 12.763 18.678 11.073 20.728C9.38297 22.778 7.99997 24.978 7.99997 25.617C7.99997 26.256 8.84497 27.823 9.87897 29.099C11.737 31.394 11.728 31.457 8.97997 34.959C7.45297 36.907 5.90197 39.513 5.53397 40.75C5.16597 41.987 5.23297 42.998 5.68297 42.995C6.13197 42.992 8.04097 40.58 9.92497 37.634C12.344 33.852 13.852 32.41 15.058 32.725C15.999 32.971 17.38 32.317 18.133 31.27C18.885 30.224 20.288 29.075 21.25 28.716C22.212 28.357 23 27.164 23 26.067C23 24.969 23.945 23.565 25.1 22.947C26.584 22.152 27.067 21.131 26.748 19.462C26.469 18 26.843 16.891 27.73 16.55C28.518 16.248 30.505 16 32.145 16C34.4 16 35.073 16.426 34.909 17.75C34.79 18.712 34.989 20.175 35.352 21C35.715 21.825 36.121 24.3 36.256 26.5C36.487 30.28 36.335 30.515 33.5 30.774C31.85 30.925 29.494 31.269 28.265 31.539C26.929 31.833 24.016 34.9 21.015 39.172C18.257 43.1 16 46.693 16 47.157C16 47.621 16.337 47.988 16.75 47.974C17.163 47.96 19.03 45.693 20.9 42.937C22.77 40.181 25.617 36.817 27.227 35.463C29.043 33.934 31.406 33 33.454 33C35.27 33 37.281 32.366 37.924 31.592C38.566 30.818 38.998 28.23 38.882 25.842C38.767 23.454 38.232 20.927 37.694 20.226C37.156 19.525 36.988 18.678 37.322 18.344C37.656 18.01 37.48 16.896 36.93 15.869C36.306 14.703 34.838 14 33.03 14C31.435 14 29.024 14.421 27.672 14.934C26.321 15.448 24.266 15.621 23.107 15.318C21.852 14.989 21 13.96 21 12.77C21 11.132 21.494 10.867 23.75 11.293C25.262 11.579 27.625 12.114 29 12.482L31.5 13.152L29.139 11.076C27.757 9.86 25.394 9 23.439 9C21.382 9 19.746 9.631 19.18 10.642ZM38 32.626C38 32.971 39.39 36.008 41.088 39.376C42.786 42.744 44.586 45.927 45.088 46.45C45.651 47.037 46 46.708 46 45.59C46 44.594 44.587 41.129 42.861 37.89C41.134 34.65 39.334 32 38.861 32C38.387 32 38 32.282 38 32.626ZM28.022 37.79C28.01 38.499 28.909 40.862 30.02 43.04C31.132 45.218 32.458 47 32.968 47C33.526 47 33.506 45.904 32.918 44.25C32.38 42.737 31.063 40.375 29.992 39C28.921 37.625 28.034 37.08 28.022 37.79Z" fill="currentColor" fill-rule="evenodd"></path><path clip-rule="evenodd" d="M5.28 3.07011C4.639 4.76811 3.189 6.39911 2.057 6.69511C0.926 6.99111 0 7.57911 0 8.00211C0 8.42411 1.125 9.50711 2.5 10.4081C3.875 11.3091 5.007 12.8231 5.015 13.7731C5.024 14.7231 5.453 16.1681 5.969 16.9841C6.708 18.1531 7.241 17.6681 8.485 14.6901C9.353 12.6131 10.724 10.6591 11.532 10.3501C12.339 10.0401 13 9.26711 13 8.63411C13 8.00011 12.134 6.94011 11.075 6.27911C10.016 5.61711 9.003 4.08211 8.825 2.86611C8.646 1.65111 8.038 0.505106 7.473 0.319106C6.908 0.134106 5.921 1.37111 5.28 3.07011ZM10 9C10 9.413 7.527 12.174 7 12.5C6.74716 12.6561 6.54934 12.2059 6.29147 11.6191C6.01085 10.9805 5.65911 10.1801 5.08795 9.82314C3.21095 8.65114 3.19395 8.47914 4.79695 6.88514C5.27661 6.40857 5.67005 5.85605 5.99951 5.3934C6.73742 4.35715 7.15433 3.77168 7.5 5.49995C7.97009 6.12674 8.39108 6.66396 8.74757 7.11888C9.52857 8.11553 10 8.71712 10 9Z" fill="var(--icon-accent, #2AD4FF)" fill-rule="evenodd"></path></svg></div>
+            <h3 class="h-card">Zaufanie</h3>
+            <p><code>templates/icons/zaufanie.svg</code></p>
+          </div>
+          <div class="value">
+            <div class="value__icon"><svg aria-hidden="true" focusable="false" fill="none" height="44" viewbox="0 0 48 44" width="48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M34.077 12.589C31.839 14.471 30.999 16.04 30.995 18.339L30.99 21.5L28.745 18.873C27.51 17.429 25.756 15.997 24.847 15.692C23.938 15.387 22.41 15.711 21.451 16.412C20.276 17.271 19.87 18.538 20.205 20.294C20.531 21.996 20.206 23.091 19.27 23.45C18.482 23.752 17.254 24 16.541 24C15.602 24 15.382 22.793 15.74 19.617C16.139 16.072 15.829 14.829 14.117 13.117C12.878 11.878 10.723 11 8.923 11C6.856 11 4.887 11.959 2.923 13.923C1.315 15.531 0 17.535 0 18.376C0 19.217 0.522 21.052 1.161 22.453C1.799 23.854 2.65 25 3.053 25C3.455 25 2.933 26.67 1.892 28.711C0.681 31.087 0 34.507 0 38.211C0 41.395 0.396 44 0.88 44C1.364 44 1.953 41.413 2.189 38.25C2.425 35.087 3.267 31.168 4.059 29.54C5.413 26.758 5.83 26.59 10.992 26.743C14.013 26.832 17.694 26.302 19.172 25.564C21.611 24.347 22.062 24.437 24.029 26.531C25.222 27.8 27.509 29.382 29.111 30.046C30.803 30.747 32.281 32.272 32.635 33.681C32.97 35.016 32.992 37.659 32.685 39.554C32.377 41.449 32.496 43 32.949 43C33.402 43 34.077 40.969 34.45 38.487C34.822 36.005 34.84 33.072 34.491 31.97C34.141 30.868 32.07 29.056 29.888 27.943C27.706 26.83 25.063 24.507 24.013 22.78C22.963 21.054 22.332 19.272 22.611 18.821C22.89 18.369 23.538 18 24.051 18C24.565 18 26.148 19.305 27.569 20.901C29.126 22.648 31.949 24.253 34.67 24.938C37.154 25.564 40.017 25.812 41.032 25.49C42.292 25.09 43.252 25.602 44.055 27.103C44.702 28.312 45.292 32.382 45.366 36.147C45.44 39.912 45.829 42.994 46.231 42.996C46.633 42.998 47.25 41.851 47.603 40.446C47.956 39.041 48.03 35.661 47.768 32.936C47.506 30.21 46.587 27.197 45.726 26.24C44.299 24.654 44.331 24.29 46.08 22.139C47.136 20.841 48 18.683 48 17.344C48 16.005 46.895 13.805 45.545 12.455C44.042 10.951 41.941 10 40.122 10C38.387 10 35.875 11.076 34.077 12.589ZM44.75 14.278C45.438 14.81 46 16.315 46 17.622C46 18.93 45.1 20.9 44 22C42.9 23.1 40.925 24 39.611 24C38.297 24 36.204 23.176 34.96 22.169C33.19 20.735 32.847 19.744 33.384 17.606C33.83 15.828 35.174 14.41 37.232 13.544C38.972 12.813 41.094 12.461 41.948 12.762C42.801 13.064 44.063 13.746 44.75 14.278ZM12.429 14.571C13.293 15.436 14 17.265 14 18.637C14 20.009 13.563 21.949 13.028 22.948C12.493 23.947 11.34 25.039 10.464 25.375C9.589 25.711 7.606 25.331 6.058 24.53C4.509 23.729 2.975 22.377 2.648 21.525C2.321 20.673 2.543 18.902 3.141 17.59C3.739 16.278 5.189 14.738 6.364 14.17C7.539 13.601 9.03 13.105 9.679 13.068C10.327 13.03 11.564 13.707 12.429 14.571ZM18.987 28.569C17.619 29.354 15.262 30.436 13.75 30.973C11.313 31.839 11.008 32.437 11.07 36.225C11.109 38.576 11.527 41.4 12 42.5C12.473 43.6 12.939 44.05 13.036 43.5C13.133 42.95 13.131 41.271 13.033 39.769C12.934 38.267 13.142 36.129 13.494 35.019C13.846 33.909 14.667 32.998 15.317 32.995C15.968 32.992 17.85 31.908 19.5 30.585C21.15 29.262 22.269 27.946 21.987 27.66C21.705 27.375 20.355 27.784 18.987 28.569Z" fill="currentColor" fill-rule="evenodd"></path><path d="M24 8C23.45 8 23 6.2 23 4C23 1.8 23.45 0 24 0C24.55 0 25 1.8 25 4C25 6.2 24.55 8 24 8Z" fill="var(--icon-accent, #2AD4FF)"></path><path d="M15.418 9.557C14.638 8.491 14 6.804 14 5.809C14 4.814 14.213 4 14.474 4C14.735 4 15.668 5.392 16.548 7.093C17.428 8.794 17.852 10.481 17.492 10.841C17.131 11.202 16.198 10.624 15.418 9.557Z" fill="var(--icon-accent, #2AD4FF)"></path><path d="M30 10.089C30 9.418 30.466 7.998 31.035 6.934C31.605 5.87 32.505 5 33.035 5C33.566 5 34 5.605 34 6.345C34 7.085 33.1 8.505 32 9.5C30.747 10.634 30 10.854 30 10.089Z" fill="var(--icon-accent, #2AD4FF)"></path></svg></div>
+            <h3 class="h-card">Wspólne działanie</h3>
+            <p><code>templates/icons/wspolne.svg</code></p>
+          </div>
+    </div>
+    <div class="demo demo--dark" style="margin-top:26px">
+      <p class="sb-label" style="color:var(--on-dark-2)">Ten sam zestaw na ciemnym tle - kolor główny dziedziczy, akcent zostaje</p>
+      <div class="values" style="color:#fff">
+          <div class="value">
+            <div class="value__icon" style="color:#fff"><svg aria-hidden="true" focusable="false" fill="none" height="44" viewbox="0 0 48 44" width="48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M13.495 8.04102C8.545 12.453 3.485 17.281 2.25 18.77C1.015 20.26 0.00300375 22.002 3.74873e-06 22.641C-0.00299625 23.28 1.795 24.107 3.995 24.479L7.995 25.155L8.01 32.317C8.019 36.256 8.356 39.974 8.76 40.579C9.164 41.184 10.478 42.197 11.679 42.829C12.881 43.462 17.876 43.979 22.78 43.979C27.684 43.979 33.059 43.504 34.724 42.924C37.154 42.076 37.872 41.14 38.362 38.174C38.698 36.142 38.979 32.454 38.986 29.979C38.999 25.504 39.019 25.478 42.713 25.213C44.756 25.066 46.878 24.496 47.428 23.946C48.096 23.278 44.615 19.121 36.978 11.462C30.68 5.14602 24.845 -0.0119791 24.011 2.0896e-05C23.177 0.0110209 18.445 3.63002 13.495 8.04102ZM34.995 12.979L45.495 22.906L41.389 22.943L37.283 22.979L36.597 31.196C36.212 35.814 35.383 39.749 34.704 40.18C34.039 40.603 28.915 40.955 23.316 40.964C15.188 40.976 12.806 40.648 11.493 39.334C10.195 38.036 9.916 36.134 10.171 30.331L10.495 22.974L7.304 22.977C5.549 22.978 3.851 22.555 3.531 22.036C3.21 21.518 7.571 17.031 13.221 12.066C18.872 7.10002 23.72 3.04102 23.995 3.04502C24.27 3.04902 29.22 7.51902 34.995 12.979Z" fill="currentColor" fill-rule="evenodd"></path><path d="M16.653 33.938C16.985 32.277 18.384 30.032 19.761 28.948C21.138 27.865 22.408 26.979 22.583 26.979C22.758 26.979 23.997 27.479 25.338 28.089C26.678 28.7 28.274 30.296 28.885 31.636C29.495 32.977 29.995 35.402 29.995 37.026C29.995 38.65 29.545 39.979 28.995 39.979C28.445 39.979 27.995 38.729 27.995 37.202C27.995 35.674 27.294 33.424 26.438 32.202C25.582 30.979 23.984 29.979 22.887 29.979C21.559 29.979 20.412 31.13 19.454 33.423C18.662 35.317 18.284 37.567 18.612 38.423C18.94 39.279 18.759 39.979 18.209 39.979C17.659 39.979 16.948 39.299 16.629 38.468C16.31 37.637 16.321 35.598 16.653 33.938Z" fill="var(--icon-accent, #2AD4FF)"></path></svg></div>
+            <h3 class="h-card" style="color:#fff">Poczucie sensu</h3>
+            <p style="color:var(--on-dark-2)"><code>templates/icons/sens.svg</code></p>
+          </div>
+          <div class="value">
+            <div class="value__icon" style="color:#fff"><svg aria-hidden="true" focusable="false" fill="none" height="48" viewbox="0 0 42 48" width="42" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M6.49277 32.6789C5.75577 34.2169 4.25577 35.6369 3.15977 35.8349C2.06477 36.0319 0.739769 36.5999 0.217769 37.0969C-0.361231 37.6469 0.236769 37.9999 1.74477 37.9999C3.10777 37.9999 5.22277 37.2989 6.44477 36.4429C7.66777 35.5869 8.66777 34.2369 8.66777 33.4429C8.66777 32.6489 9.11777 31.9999 9.66777 31.9999C10.2178 31.9999 10.6748 33.0129 10.6828 34.2499C10.6918 35.4869 11.1258 37.1749 11.6478 37.9999C12.3898 39.1709 14.8018 39.4999 22.6338 39.4999C28.1528 39.4999 32.6688 39.8219 32.6678 40.2149C32.6678 40.6079 31.8228 41.3819 30.7898 41.9349C29.7568 42.4869 23.9268 43.4099 17.8338 43.9839C11.7408 44.5589 6.06077 45.2959 5.21177 45.6219C4.36277 45.9469 3.66777 46.6639 3.66777 47.2139C3.66777 47.8009 4.39077 47.8869 5.41777 47.4229C6.38077 46.9879 12.3928 46.3569 18.7778 46.0219C27.3078 45.5749 31.0888 44.9539 33.0278 43.6839C34.9028 42.4549 35.6678 41.0909 35.6678 38.9769C35.6678 36.7999 35.1938 35.9999 33.9048 35.9999C32.9358 35.9999 31.6978 34.9899 31.1548 33.7559C30.6118 32.5219 29.3908 31.3659 28.4408 31.1869C27.4918 31.0079 25.2038 32.0149 23.3578 33.4229C21.5118 34.8309 18.6018 36.2629 16.8918 36.6049C14.0138 37.1809 13.7198 36.9779 12.9168 33.8629C12.3238 31.5629 11.3828 30.4019 9.94177 30.1909C8.45277 29.9729 7.43877 30.7049 6.49277 32.6789ZM29.1248 34.9309C29.4418 35.4429 29.3558 36.0649 28.9338 36.3129C28.5128 36.5619 26.5928 37.0989 24.6678 37.5079L21.1678 38.2519L23.6678 36.1589C25.0428 35.0079 26.7038 34.0519 27.3588 34.0329C28.0138 34.0149 28.8088 34.4189 29.1248 34.9309Z" fill="currentColor" fill-rule="evenodd"></path><path clip-rule="evenodd" d="M29.2698 2.30688C28.0017 3.57593 26.7607 5.21997 26.5148 5.95996C26.1927 6.92505 25.3127 6.55396 23.4117 4.65308C21.7028 2.94409 19.6758 2 17.7128 2C16.0007 2 13.7917 2.87598 12.6677 4C11.3688 5.29907 10.6677 7.33301 10.6677 9.80298C10.6677 12.4551 11.5757 14.8401 13.6658 17.6831C15.3147 19.925 18.1277 22.874 19.9158 24.2361C21.7047 25.5979 24.1868 27.0339 25.4327 27.428C26.9897 27.9199 28.8177 27.4519 31.2787 25.9319C33.2477 24.7141 36.1558 21.929 37.7397 19.741C39.3247 17.554 40.9067 14.2451 41.2548 12.3889C41.6028 10.532 41.6017 7.87402 41.2527 6.48096C40.9027 5.08911 39.7288 3.06104 38.6427 1.9751C37.5568 0.888916 35.5227 0 34.1227 0C32.7228 0 30.5387 1.03809 29.2698 2.30688ZM38.4547 6.229C39.4528 8.32202 39.5037 9.89697 38.6697 12.9919C38.0728 15.2109 36.2968 18.4829 34.7238 20.2629C33.1508 22.043 30.5157 24.2859 28.8688 25.2458L25.8738 26.991L20.7297 22.366C17.8998 19.821 14.9287 16.4709 14.1257 14.9199C13.3237 13.3679 12.6677 11.022 12.6677 9.70483C12.6677 8.38794 13.5358 6.5249 14.5957 5.56494C15.8457 4.43384 17.2677 4.05591 18.6348 4.48901C19.7947 4.85791 21.9077 6.91602 23.3287 9.06299C24.7488 11.21 26.2567 12.7539 26.6787 12.4929C27.1007 12.2319 27.7557 10.7769 28.1348 9.25903C28.5137 7.74194 29.5527 5.69092 30.4437 4.70288C31.3937 3.64893 33.1157 3.02783 34.6077 3.20288C36.2228 3.39087 37.6287 4.49683 38.4547 6.229Z" fill="var(--icon-accent, #2AD4FF)" fill-rule="evenodd"></path></svg></div>
+            <h3 class="h-card" style="color:#fff">Szacunek</h3>
+            <p style="color:var(--on-dark-2)"><code>templates/icons/szacunek.svg</code></p>
+          </div>
+          <div class="value">
+            <div class="value__icon" style="color:#fff"><svg aria-hidden="true" focusable="false" fill="none" height="48" viewbox="0 0 46 48" width="46" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M19.18 10.642C18.675 11.545 18.48 13.12 18.747 14.142C19.015 15.164 19.824 16 20.545 16C21.267 16 22.564 16.707 23.429 17.571C24.293 18.436 25 19.508 25 19.955C25 20.401 24.1 21.002 23 21.29C21.803 21.603 21 22.654 21 23.906C21 25.058 20.55 26 20 26C19.45 26 18.098 26.902 16.995 28.005C15.308 29.692 14.675 29.814 13.014 28.777C11.928 28.098 10.815 26.961 10.542 26.249C10.269 25.538 11.663 23.165 13.639 20.978C16.079 18.277 16.737 17 15.689 17C14.84 17 12.763 18.678 11.073 20.728C9.38297 22.778 7.99997 24.978 7.99997 25.617C7.99997 26.256 8.84497 27.823 9.87897 29.099C11.737 31.394 11.728 31.457 8.97997 34.959C7.45297 36.907 5.90197 39.513 5.53397 40.75C5.16597 41.987 5.23297 42.998 5.68297 42.995C6.13197 42.992 8.04097 40.58 9.92497 37.634C12.344 33.852 13.852 32.41 15.058 32.725C15.999 32.971 17.38 32.317 18.133 31.27C18.885 30.224 20.288 29.075 21.25 28.716C22.212 28.357 23 27.164 23 26.067C23 24.969 23.945 23.565 25.1 22.947C26.584 22.152 27.067 21.131 26.748 19.462C26.469 18 26.843 16.891 27.73 16.55C28.518 16.248 30.505 16 32.145 16C34.4 16 35.073 16.426 34.909 17.75C34.79 18.712 34.989 20.175 35.352 21C35.715 21.825 36.121 24.3 36.256 26.5C36.487 30.28 36.335 30.515 33.5 30.774C31.85 30.925 29.494 31.269 28.265 31.539C26.929 31.833 24.016 34.9 21.015 39.172C18.257 43.1 16 46.693 16 47.157C16 47.621 16.337 47.988 16.75 47.974C17.163 47.96 19.03 45.693 20.9 42.937C22.77 40.181 25.617 36.817 27.227 35.463C29.043 33.934 31.406 33 33.454 33C35.27 33 37.281 32.366 37.924 31.592C38.566 30.818 38.998 28.23 38.882 25.842C38.767 23.454 38.232 20.927 37.694 20.226C37.156 19.525 36.988 18.678 37.322 18.344C37.656 18.01 37.48 16.896 36.93 15.869C36.306 14.703 34.838 14 33.03 14C31.435 14 29.024 14.421 27.672 14.934C26.321 15.448 24.266 15.621 23.107 15.318C21.852 14.989 21 13.96 21 12.77C21 11.132 21.494 10.867 23.75 11.293C25.262 11.579 27.625 12.114 29 12.482L31.5 13.152L29.139 11.076C27.757 9.86 25.394 9 23.439 9C21.382 9 19.746 9.631 19.18 10.642ZM38 32.626C38 32.971 39.39 36.008 41.088 39.376C42.786 42.744 44.586 45.927 45.088 46.45C45.651 47.037 46 46.708 46 45.59C46 44.594 44.587 41.129 42.861 37.89C41.134 34.65 39.334 32 38.861 32C38.387 32 38 32.282 38 32.626ZM28.022 37.79C28.01 38.499 28.909 40.862 30.02 43.04C31.132 45.218 32.458 47 32.968 47C33.526 47 33.506 45.904 32.918 44.25C32.38 42.737 31.063 40.375 29.992 39C28.921 37.625 28.034 37.08 28.022 37.79Z" fill="currentColor" fill-rule="evenodd"></path><path clip-rule="evenodd" d="M5.28 3.07011C4.639 4.76811 3.189 6.39911 2.057 6.69511C0.926 6.99111 0 7.57911 0 8.00211C0 8.42411 1.125 9.50711 2.5 10.4081C3.875 11.3091 5.007 12.8231 5.015 13.7731C5.024 14.7231 5.453 16.1681 5.969 16.9841C6.708 18.1531 7.241 17.6681 8.485 14.6901C9.353 12.6131 10.724 10.6591 11.532 10.3501C12.339 10.0401 13 9.26711 13 8.63411C13 8.00011 12.134 6.94011 11.075 6.27911C10.016 5.61711 9.003 4.08211 8.825 2.86611C8.646 1.65111 8.038 0.505106 7.473 0.319106C6.908 0.134106 5.921 1.37111 5.28 3.07011ZM10 9C10 9.413 7.527 12.174 7 12.5C6.74716 12.6561 6.54934 12.2059 6.29147 11.6191C6.01085 10.9805 5.65911 10.1801 5.08795 9.82314C3.21095 8.65114 3.19395 8.47914 4.79695 6.88514C5.27661 6.40857 5.67005 5.85605 5.99951 5.3934C6.73742 4.35715 7.15433 3.77168 7.5 5.49995C7.97009 6.12674 8.39108 6.66396 8.74757 7.11888C9.52857 8.11553 10 8.71712 10 9Z" fill="var(--icon-accent, #2AD4FF)" fill-rule="evenodd"></path></svg></div>
+            <h3 class="h-card" style="color:#fff">Zaufanie</h3>
+            <p style="color:var(--on-dark-2)"><code>templates/icons/zaufanie.svg</code></p>
+          </div>
+          <div class="value">
+            <div class="value__icon" style="color:#fff"><svg aria-hidden="true" focusable="false" fill="none" height="44" viewbox="0 0 48 44" width="48" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M34.077 12.589C31.839 14.471 30.999 16.04 30.995 18.339L30.99 21.5L28.745 18.873C27.51 17.429 25.756 15.997 24.847 15.692C23.938 15.387 22.41 15.711 21.451 16.412C20.276 17.271 19.87 18.538 20.205 20.294C20.531 21.996 20.206 23.091 19.27 23.45C18.482 23.752 17.254 24 16.541 24C15.602 24 15.382 22.793 15.74 19.617C16.139 16.072 15.829 14.829 14.117 13.117C12.878 11.878 10.723 11 8.923 11C6.856 11 4.887 11.959 2.923 13.923C1.315 15.531 0 17.535 0 18.376C0 19.217 0.522 21.052 1.161 22.453C1.799 23.854 2.65 25 3.053 25C3.455 25 2.933 26.67 1.892 28.711C0.681 31.087 0 34.507 0 38.211C0 41.395 0.396 44 0.88 44C1.364 44 1.953 41.413 2.189 38.25C2.425 35.087 3.267 31.168 4.059 29.54C5.413 26.758 5.83 26.59 10.992 26.743C14.013 26.832 17.694 26.302 19.172 25.564C21.611 24.347 22.062 24.437 24.029 26.531C25.222 27.8 27.509 29.382 29.111 30.046C30.803 30.747 32.281 32.272 32.635 33.681C32.97 35.016 32.992 37.659 32.685 39.554C32.377 41.449 32.496 43 32.949 43C33.402 43 34.077 40.969 34.45 38.487C34.822 36.005 34.84 33.072 34.491 31.97C34.141 30.868 32.07 29.056 29.888 27.943C27.706 26.83 25.063 24.507 24.013 22.78C22.963 21.054 22.332 19.272 22.611 18.821C22.89 18.369 23.538 18 24.051 18C24.565 18 26.148 19.305 27.569 20.901C29.126 22.648 31.949 24.253 34.67 24.938C37.154 25.564 40.017 25.812 41.032 25.49C42.292 25.09 43.252 25.602 44.055 27.103C44.702 28.312 45.292 32.382 45.366 36.147C45.44 39.912 45.829 42.994 46.231 42.996C46.633 42.998 47.25 41.851 47.603 40.446C47.956 39.041 48.03 35.661 47.768 32.936C47.506 30.21 46.587 27.197 45.726 26.24C44.299 24.654 44.331 24.29 46.08 22.139C47.136 20.841 48 18.683 48 17.344C48 16.005 46.895 13.805 45.545 12.455C44.042 10.951 41.941 10 40.122 10C38.387 10 35.875 11.076 34.077 12.589ZM44.75 14.278C45.438 14.81 46 16.315 46 17.622C46 18.93 45.1 20.9 44 22C42.9 23.1 40.925 24 39.611 24C38.297 24 36.204 23.176 34.96 22.169C33.19 20.735 32.847 19.744 33.384 17.606C33.83 15.828 35.174 14.41 37.232 13.544C38.972 12.813 41.094 12.461 41.948 12.762C42.801 13.064 44.063 13.746 44.75 14.278ZM12.429 14.571C13.293 15.436 14 17.265 14 18.637C14 20.009 13.563 21.949 13.028 22.948C12.493 23.947 11.34 25.039 10.464 25.375C9.589 25.711 7.606 25.331 6.058 24.53C4.509 23.729 2.975 22.377 2.648 21.525C2.321 20.673 2.543 18.902 3.141 17.59C3.739 16.278 5.189 14.738 6.364 14.17C7.539 13.601 9.03 13.105 9.679 13.068C10.327 13.03 11.564 13.707 12.429 14.571ZM18.987 28.569C17.619 29.354 15.262 30.436 13.75 30.973C11.313 31.839 11.008 32.437 11.07 36.225C11.109 38.576 11.527 41.4 12 42.5C12.473 43.6 12.939 44.05 13.036 43.5C13.133 42.95 13.131 41.271 13.033 39.769C12.934 38.267 13.142 36.129 13.494 35.019C13.846 33.909 14.667 32.998 15.317 32.995C15.968 32.992 17.85 31.908 19.5 30.585C21.15 29.262 22.269 27.946 21.987 27.66C21.705 27.375 20.355 27.784 18.987 28.569Z" fill="currentColor" fill-rule="evenodd"></path><path d="M24 8C23.45 8 23 6.2 23 4C23 1.8 23.45 0 24 0C24.55 0 25 1.8 25 4C25 6.2 24.55 8 24 8Z" fill="var(--icon-accent, #2AD4FF)"></path><path d="M15.418 9.557C14.638 8.491 14 6.804 14 5.809C14 4.814 14.213 4 14.474 4C14.735 4 15.668 5.392 16.548 7.093C17.428 8.794 17.852 10.481 17.492 10.841C17.131 11.202 16.198 10.624 15.418 9.557Z" fill="var(--icon-accent, #2AD4FF)"></path><path d="M30 10.089C30 9.418 30.466 7.998 31.035 6.934C31.605 5.87 32.505 5 33.035 5C33.566 5 34 5.605 34 6.345C34 7.085 33.1 8.505 32 9.5C30.747 10.634 30 10.854 30 10.089Z" fill="var(--icon-accent, #2AD4FF)"></path></svg></div>
+            <h3 class="h-card" style="color:#fff">Wspólne działanie</h3>
+            <p style="color:var(--on-dark-2)"><code>templates/icons/wspolne.svg</code></p>
+          </div>
+      </div>
+    </div>
+    <div class="dont">
+      <p><b>Nie:</b> ikona konturowa w tym zestawie - kontur mamy tylko w ikonach interfejsu (strzałka, kopiuj, info).</p>
+      <p><b>Nie:</b> dwa akcenty w jednej ikonie - oko nie ma się wtedy czego złapać.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TREŚĆ ═══════════════════ -->
+<section class="sb" id="tresc">
+  <div class="container">
+    <h2>Treść artykułu</h2>
+    <p class="sb__lead">
+      Klasa <code>.prose</code> stylizuje wszystko, co wychodzi z markdownu.
+      Kolumna nie przekracza 720px, bo dłuższa linia męczy oko.
+    </p>
+    <div class="prose">
+      <h2>Nagłówek drugiego poziomu</h2>
+      <p>Bezpłatna opieka lekarska, pielęgniarska oraz rehabilitacyjna nad nieuleczalnie
+        chorymi osobami. Wizyty odbywają się <strong>w domu pacjenta</strong>, po wcześniejszym
+        ustaleniu terminu - tak, żeby dopasować się do rytmu życia rodziny.</p>
+      <h3>Nagłówek trzeciego poziomu</h3>
+      <ul>
+        <li>Zakończenie leczenia przyczynowego</li>
+        <li>Skierowanie od lekarza prowadzącego</li>
+        <li>Przesłanie <a href="#tresc">formularza zgłoszeniowego</a></li>
+      </ul>
+      <ol>
+        <li>Skierowanie elektroniczne lub papierowe</li>
+        <li>Wypis ze szpitala</li>
+      </ol>
+      <blockquote>Cytat wyróżniony pionową kreską w kolorze dekoracyjnym.</blockquote>
+      <div class="table-wrap">
+        <table>
+          <tbody>
+            <tr><td>C00-D48</td><td>Nowotwory</td></tr>
+            <tr><td>G35</td><td>Stwardnienie rozsiane</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SEKCJE ═══════════════════ -->
+<section class="sb" id="sekcje">
+  <div class="container">
+    <h2>Rytm sekcji</h2>
+    <p class="sb__lead">
+      Strona naprzemiennie oddycha jasnym i ciemnym. Nigdy dwie ciemne sekcje
+      pod rząd bez czegoś jasnego pomiędzy.
+    </p>
+    <div class="sb-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">
+      <div class="demo" style="background:var(--bg)">
+        <p class="sb-label" style="margin:0">.section</p>
+        <p style="margin:8px 0 0;font-size:.875rem">Domyślna, tło strony</p></div>
+      <div class="demo demo--dark">
+        <p class="sb-label" style="margin:0;color:var(--on-dark-2)">.section--dark</p>
+        <p style="margin:8px 0 0;font-size:.875rem;color:var(--on-dark-2)">Ink, tekst <code>--on-dark-2</code></p></div>
+      <div class="demo" style="background:linear-gradient(180deg,var(--surface) 0%,#eff2f3 100%)">
+        <p class="sb-label" style="margin:0">.section--tinted</p>
+        <p style="margin:8px 0 0;font-size:.875rem">Delikatny wash pod sekcją kontaktu</p></div>
+      <div class="demo" style="background:var(--ink);border-color:var(--line-dark);position:relative;overflow:hidden">
+        <p class="sb-label" style="margin:0;color:var(--on-dark-2)">.section--misja</p>
+        <p style="margin:8px 0 0;font-size:.875rem;color:var(--on-dark-2)">
+          <code>padding-bottom: 0</code> - postać wychodzi z tła sekcji bez ramki</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ RUCH ═══════════════════ -->
+<section class="sb" id="ruch">
+  <div class="container">
+    <h2>Ruch</h2>
+    <p class="sb__lead">
+      Animujemy wyłącznie <code>opacity</code> i <code>transform</code>.
+      Krzywa <code>--ease</code> to <code>cubic-bezier(.16, 1, .3, 1)</code>,
+      podstawowy czas <code>--dur</code> to 420ms.
+    </p>
+    <ul style="font-size:.9375rem;line-height:1.8;color:var(--muted);max-width:70ch">
+      <li><b style="color:var(--ink)">Wejście w kadr</b> - fade + 18px w górę, 620ms, z opóźnieniem po 70-100ms na element w grupie.</li>
+      <li><b style="color:var(--ink)">Hover karty</b> - <code>translateY(-3px)</code> i mocniejszy cień, nic więcej.</li>
+      <li><b style="color:var(--ink)">Hover zdjęcia w karcie</b> - <code>scale(1.035)</code> przez 700ms.</li>
+      <li><b style="color:var(--ink)">Podkreślenie w nawigacji</b> - <code>scaleX</code> z lewej krawędzi.</li>
+    </ul>
+    <div class="dont">
+      <p><b>Zawsze:</b> <code>prefers-reduced-motion</code> wyłącza wszystko - to nie jest opcja na stronie hospicjum.</p>
+      <p><b>Zawsze:</b> bezpiecznik czasowy na scroll-reveal. Jeśli obserwer nie zadziała,
+        po 3s treść i tak się pokazuje. Treść nie ma prawa zniknąć przez animację.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="sb" style="border-bottom:0">
+  <div class="container">
+    <p style="font-size:.8125rem;color:var(--muted);margin:0">
+      Zmiana designu = zmiana <code>css/styles.css</code>. Ta strona zaktualizuje się sama.
+      Jeśli potrzebujesz nowego tokenu, dopisz go do bloku <code>:root</code> i dodaj tu próbkę -
+      inaczej za pół roku nikt nie będzie wiedział, że istnieje.
+    </p>
+  </div>
+</footer>
+
+<script src="../js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+dist/
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+venv/
+
+# notatki robocze i instrukcja pracy - zostaja lokalnie, nie na GitHubie
+prywatne/
+CLAUDE.md

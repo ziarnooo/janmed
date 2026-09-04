@@ -1,0 +1,143 @@
+{
+  "seo_title": "Hospicjum Domowe • Hospicjum Domowe JANMED",
+  "description": "Hospicjum Domowe JANMED zapewnia pacjentom najwyższy poziom opieki paliatywnej. Pacjenci w Hospicjum mogą być z bliskimi przez całą dobę.",
+  "og_image": "logo_ql.jpg",
+  "hero": {
+    "kicker": "Hospicjum domowe dla dorosłych i dzieci",
+    "title": "Otoczymy opieką Twoich bliskich w ich domu",
+    "points": [
+      "<strong>bezpłatna opieka</strong> lekarska, pielęgniarska oraz rehabilitacyjna",
+      "opieka nad nieuleczalnie chorymi osobami",
+      "dojeżdżamy na terenie: Olkusz, Pińczów i Kaziemierza Wielka oraz okolic"
+    ],
+    "primary": {
+      "label": "Zgłoś pacjenta",
+      "href": "/formularz-zgloszeniowy-do-hospicjum-domowego/"
+    },
+    "secondary": {
+      "label": "Jak się dostać?",
+      "href": "/hospicjum-domowe-jak-zalatwic/"
+    },
+    "image": "hero-pielegniarka.jpg",
+    "image_alt": "Pielęgniarka hospicjum mierzy ciśnienie pacjentce w jej domu",
+    "video": "https://player.vimeo.com/video/681956423?background=1&autoplay=1&loop=1&muted=1&autopause=0&dnt=1",
+    "phone": {
+      "label": "Wolisz porozmawiać?",
+      "number": "698 887 816",
+      "href": "tel:+48698887816"
+    },
+    "trust": [
+      {
+        "strong": "Bezpłatnie",
+        "rest": "w ramach NFZ"
+      },
+      {
+        "strong": "3 placówki",
+        "rest": "Olkusz, Pińczów, Kazimierza Wielka"
+      },
+      {
+        "strong": "Całodobowo",
+        "rest": "telefon do lekarza i pielęgniarki"
+      },
+      {
+        "strong": "Od 2010",
+        "rest": "roku"
+      }
+    ]
+  },
+  "diseases": {
+    "kicker": "Choroby kwalifikujące",
+    "title": "Jakie choroby kwalifikują do Hospicjum Domowego?",
+    "intro": "Opieka Hospicjum Domowego jest <strong>bezpłatna</strong>. Wymagana jest kwalifikacja wg przynajmniej jednej z poniżej przedstawionych <a href=\"https://pacjent.gov.pl/artykul/opieka-paliatywno-hospicyjna\" target=\"_blank\" rel=\"noopener\">jednostek chorobowych</a>.",
+    "items": [
+      {
+        "code": "B20-B24",
+        "name": "Choroba wywołana przez ludzki wirus upośledzenia odporności (HIV)"
+      },
+      {
+        "code": "C00-D48",
+        "name": "Nowotwory"
+      },
+      {
+        "code": "G09",
+        "name": "Następstwa zapalnych chorób ośrodkowego układu nerwowego"
+      },
+      {
+        "code": "G10 - G13",
+        "name": "Układowe zaniki pierwotne zajmujące ośrodkowy układ nerwowy"
+      },
+      {
+        "code": "G35",
+        "name": "Stwardnienie rozsiane"
+      },
+      {
+        "code": "I42- I43",
+        "name": "Kardiomiopatia"
+      },
+      {
+        "code": "J96",
+        "name": "Niewydolność oddechowa niesklasyfikowana gdzie indziej"
+      },
+      {
+        "code": "L89",
+        "name": "Owrzodzenie odleżynowe"
+      }
+    ],
+    "note": "Warunkiem kwalifikacji do opieki paliatywno-hospicyjnej jest <strong>zakończenie leczenia przyczynowego</strong>. Wymagane do objęcia chorego opieką jest posiadanie <strong>skierowania</strong>, które może wystawić lekarz rodzinny, specjalista np. onkolog lub też inny lekarz opieki zdrowotnej.",
+    "nfz": {
+      "href": "https://www.nfz.gov.pl/gfx/nfz/userfiles/_public/dla_pacjenta/fop/przewodnik_dla_opiekunow_osob_niesamodzielnych_3.pdf",
+      "image": "logo-nfz-3.png",
+      "alt": "Narodowy Fundusz Zdrowia - przewodnik dla opiekunów osób niesamodzielnych (PDF)"
+    }
+  },
+  "values": {
+    "title": "Nasze wartości",
+    "items": [
+      {
+        "icon": "sens",
+        "title": "Poczucie sensu",
+        "text": "Poczucie sensu jest główną motywacją naszych działań. Uważnie szukamy go w każdym codziennym zadaniu i celu."
+      },
+      {
+        "icon": "szacunek",
+        "title": "Szacunek",
+        "text": "Jesteśmy gotowi do pomocy każdemu człowiekowi, akceptując nieuchronność śmierci. Z uwagą dbamy o dobro i godność drugiego człowieka."
+      },
+      {
+        "icon": "zaufanie",
+        "title": "Zaufanie",
+        "text": "Zaufanie budujemy na uczciwości, będącej istotą naszych relacji z innymi ludźmi. Uczciwie dysponujemy środkami od darczyńców."
+      },
+      {
+        "icon": "wspolne",
+        "title": "Wspólne działanie",
+        "text": "Tworzymy zespół współpracowników, wolontariuszy, przyjaciół, darczyńców, który działając w oparciu o wspólne wartości."
+      }
+    ]
+  },
+  "mission": {
+    "kicker": "Czym się kierujemy",
+    "title": "Nasza misja",
+    "quote": "Głęboko wierzymy w to, że dobra opieka medyczna, wsparcie i czujność mogą sprawić, że człowiek chory oraz jego najbliżsi poczują <strong>bliskość, miłość oraz spokój</strong> na ostatniej drodze życia.",
+    "author": "Wojciech Ziarno",
+    "role": "Dyrektor hospicjum",
+    "image": "wojciech-ziarno",
+    "image_alt": "Wojciech Ziarno, dyrektor Hospicjum Domowego JANMED"
+  },
+  "contact": {
+    "title": "Dane kontaktowe",
+    "form_card": {
+      "title": "Formularz kontaktowy",
+      "text": "W razie dodatkowych pytań prosimy o kontakt telefoniczny lub mailowy",
+      "primary": {
+        "label": "Wyślij e-mail",
+        "href": "mailto:biuro@janmed.pl"
+      },
+      "divider": "lub",
+      "secondary": {
+        "label": "Wypełnij formularz zgłoszenia pacjenta",
+        "href": "/formularz-zgloszeniowy-do-hospicjum-domowego/"
+      }
+    }
+  }
+}

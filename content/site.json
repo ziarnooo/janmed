@@ -1,0 +1,121 @@
+{
+  "name": "Hospicjum Domowe JANMED",
+  "short_name": "JANMED",
+  "url": "https://janmed.pl",
+  "lang": "pl-PL",
+  "locale": "pl_PL",
+  "email": "biuro@janmed.pl",
+  "ga_id": "G-S24XS3Q9DD",
+  "donate_url": "https://zrzutka.pl/74px3w/pay",
+  "form_url": "/formularz-zgloszeniowy-do-hospicjum-domowego/",
+  "nav": [
+    {
+      "label": "Baza wiedzy",
+      "href": "/baza-wiedzy/"
+    },
+    {
+      "label": "Praca",
+      "href": "/praca/"
+    },
+    {
+      "label": "Wesprzyj hospicjum",
+      "href": "https://zrzutka.pl/74px3w/pay",
+      "external": true
+    },
+    {
+      "label": "Kontakt",
+      "href": "/kontakt/"
+    }
+  ],
+  "cta": {
+    "label": "Zgłoś pacjenta",
+    "href": "/formularz-zgloszeniowy-do-hospicjum-domowego/"
+  },
+  "locations": [
+    {
+      "name": "Hospicjum Domowe Olkusz",
+      "label": "Hospicjum Olkusz",
+      "street": "Króla Kazimierza Wielkiego 64",
+      "city": "32-300 Olkusz",
+      "phone": "698-887-816",
+      "phone_href": "tel:+48698887816",
+      "hours": "informacja i rejestracja: 8:00-15:00"
+    },
+    {
+      "name": "Hospicjum Domowe Pińczów",
+      "label": "Hospicjum Pińczów",
+      "street": "ul. Batalionów Chłopskich 33",
+      "city": "28-400 Pińczów",
+      "phone": "535-043-985",
+      "phone_href": "tel:+48535043985",
+      "hours": "informacja i rejestracja: 8:00-15:00"
+    },
+    {
+      "name": "Hospicjum Domowe Kazimierza Wielka",
+      "label": "Hospicjum Kazimierza Wielka",
+      "street": "ul. Partyzantów 12",
+      "city": "28-500 Kazimierza Wielka",
+      "phone": "535-043-985",
+      "phone_href": "tel:+48535043985",
+      "hours": "informacja i rejestracja: 8:00-15:00"
+    }
+  ],
+  "footer": {
+    "copyright": "JANMED Sp. z o. o. 2010-2026",
+    "links": [
+      {
+        "label": "Baza wiedzy",
+        "href": "/baza-wiedzy/"
+      },
+      {
+        "label": "Praca",
+        "href": "/praca/"
+      },
+      {
+        "label": "Polityka prywatności",
+        "href": "/polityka-prywatnosci/"
+      },
+      {
+        "label": "Pliki cookies",
+        "href": "/pliki-cookies/"
+      }
+    ]
+  },
+  "cookie_notice": {
+    "text": "Używamy plików cookies, żeby strona działała poprawnie i żeby wiedzieć, jak z niej korzystacie. Szczegóły:",
+    "accept": "Rozumiem",
+    "links": [
+      {
+        "label": "Polityka prywatności",
+        "href": "/polityka-prywatnosci/"
+      },
+      {
+        "label": "Pliki cookies",
+        "href": "/pliki-cookies/"
+      }
+    ]
+  },
+  "recruitment": {
+    "email": "biuro@janmed.pl",
+    "tally_embed": "https://tally.so/embed/WOWOpk?hideTitle=1&dynamicHeight=1&formEventsForwarding=1",
+    "param_position": "stanowisko",
+    "param_place": "lokalizacja",
+    "intro": "Wypełnij formularz - wrócimy z odpowiedzią po zapoznaniu się ze zgłoszeniem. CV możesz dołączyć jako plik PDF."
+  },
+  "post_cta": {
+    "heading": "Jak dostać się do Hospicjum",
+    "steps": [
+      "Zakończenie leczenia przyczynowego",
+      "Skierowanie do Hospicjum od lekarza prowadzącego",
+      "Przesłanie formularza zgłoszeniowego"
+    ],
+    "button": "Zgłoś pacjenta"
+  },
+  "support_block": {
+    "kicker": "Wesprzyj działalność hospicjum",
+    "quote": "„Nie liczy się to ile posiadasz, ale ile dajesz innym i jak się z nimi dzielisz”",
+    "body": "Każdego dnia, zespół Hospicjum Domowego, przychodzi z pomocą do domów pacjentów. Dla nas ważne jest, aby mogli pozostać w miejscu, które kojarzy się każdemu z nas ze spokojem i bezpieczeństwem - w domu. Wspomóż Hospicjum Olkusz, Hospicjum Pińczów oraz Hospicjum Kazimierza Wielka.",
+    "button": "Wesprzyj hospicjum",
+    "credit": "Wsparcie możliwe dzięki serwisowi"
+  }
+}
