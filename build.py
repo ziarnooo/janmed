@@ -385,8 +385,16 @@ def header(depth, active="", bare=False):
     items = []
     for n in SITE["nav"]:
         ext = ' target="_blank" rel="noopener"' if n.get("external") else ""
-        items.append('<li><a href="%s"%s>%s</a></li>'
-                     % (esc(link(n["href"], depth)), ext, esc(n["label"])))
+        # Bieżąca sekcja jest oznaczona semantycznie, a nie klasą - `aria-current`
+        # czytniki ekranu ogłaszają same, a CSS ma się po czym zaczepić.
+        cur = ' aria-current="page"' if active and n["href"] == active else ""
+        items.append('<li><a href="%s"%s%s>%s</a></li>'
+                     % (esc(link(n["href"], depth)), ext, cur, esc(n["label"])))
+    if active and active not in [n["href"] for n in SITE["nav"]]:
+        # Adres sekcji zmieniono w site.json, a wywołanie header() zostało stare.
+        # Bez tego zaznaczenie po prostu znika i nikt tego nie zauważa.
+        raise SystemExit("header(active=%r) nie pasuje do żadnej pozycji nav "
+                         "w content/site.json" % active)
     cta = SITE["cta"]
     return f"""
 <header class="header">
@@ -701,7 +709,7 @@ def build_baza():
     for n, p in enumerate(POSTS):
         p["_n"] = n
     cards = "".join(post_card(p, d, eager=(n < 3)) for n, p in enumerate(POSTS))
-    body = f"""{header(d)}
+    body = f"""{header(d, active="/baza-wiedzy/")}
 <main id="main">
   <section class="page-hero page-hero--figure">
     <div class="page-hero__scrim" style="background:var(--ink)"></div>
@@ -751,7 +759,7 @@ def build_post(p):
     meta_line = ('<p class="page-hero__meta"><time datetime="%s">Aktualizacja: %s</time></p>'
                  % (esc(p.get("modified") or pub), esc(fmt_date(p.get("modified") or pub)))) if pub else ""
 
-    body = f"""{header(d)}
+    body = f"""{header(d, active="/baza-wiedzy/")}
 <main id="main">
   <article>
     <section class="page-hero">
@@ -989,7 +997,7 @@ def build_kontakt():
     ale pod własnym adresem, żeby „Kontakt" w menu prowadził do strony,
     a nie do skoku w środek strony głównej."""
     d = 1
-    body = f"""{header(d)}
+    body = f"""{header(d, active="/kontakt/")}
 <main id="main">
   {contact_section(d, heading="h1", flush=True)}
 </main>
@@ -1020,7 +1028,7 @@ def build_jobs_index():
         <div class="btn-row" style="margin-top:22px">{copy_email_btn("btn--ghost")}</div>
       </div>"""
 
-    body = f"""{header(d)}
+    body = f"""{header(d, active="/praca/")}
 <main id="main">
   <section class="page-hero page-hero--figure">
     <div class="page-hero__scrim" style="background:var(--ink)"></div>
@@ -1068,13 +1076,13 @@ def build_job(j):
     </div>
   </section>"""
 
-    body = f"""{header(d)}
+    body = f"""{header(d, active="/praca/")}
 <main id="main">
   <article>
     <section class="page-hero page-hero--figure">
       <div class="page-hero__scrim" style="background:var(--ink)"></div>
       <div class="container page-hero__grid"
-           style="--figure-w:480px;--figure-min-h:clamp(360px,52vh,520px);--figure-h:calc(var(--figure-min-h) + 60px)">
+           style="--figure-w:480px;--figure-min-h:clamp(320px,46vh,450px);--figure-h:calc(var(--figure-min-h) + 60px)">
         <div class="page-hero__inner reveal">
           <p class="kicker kicker--light">Oferta pracy</p>
           <h1>{esc(j['title'])}</h1>

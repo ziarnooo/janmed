@@ -10,25 +10,33 @@
   var nav = document.getElementById("nav");
 
   if (toggle && nav) {
+    /* Menu jest pełnoekranowe, więc strona pod nim nie może się przewijać -
+       inaczej palec przeciąga treść, a nie listę. */
+    function setNav(open) {
+      toggle.setAttribute("aria-expanded", String(open));
+      nav.classList.toggle("is-open", open);
+      document.documentElement.classList.toggle("is-nav-open", open);
+    }
+
     toggle.addEventListener("click", function () {
-      var open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!open));
-      nav.classList.toggle("is-open", !open);
+      setNav(toggle.getAttribute("aria-expanded") !== "true");
     });
 
     nav.addEventListener("click", function (e) {
-      if (e.target.closest("a")) {
-        toggle.setAttribute("aria-expanded", "false");
-        nav.classList.remove("is-open");
-      }
+      if (e.target.closest("a")) setNav(false);
     });
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && nav.classList.contains("is-open")) {
-        toggle.setAttribute("aria-expanded", "false");
-        nav.classList.remove("is-open");
+        setNav(false);
         toggle.focus();
       }
+    });
+
+    /* Obrót telefonu albo przejście na szerszy ekran chowa przycisk menu.
+       Bez tego blokada przewijania zostałaby włączona bez sposobu na wyłączenie. */
+    window.matchMedia("(min-width: 861px)").addEventListener("change", function (e) {
+      if (e.matches) setNav(false);
     });
   }
 

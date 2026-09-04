@@ -285,8 +285,21 @@ h1, h2, h3, h4, h5 {
 .header__nav a:hover { color: var(--blue); }
 .header__nav a:hover::after { transform: scaleX(1); }
 
+/* Bieżąca sekcja. Kolor CTA plus grubszy rysunek liter - dwa sygnały zamiast
+   jednego, bo sam kolor gubi się przy zaburzeniach widzenia barw. */
+.header__nav a[aria-current="page"] { color: var(--crimson); font-weight: 600; }
+.header__nav a[aria-current="page"]::after {
+  background: var(--crimson);
+  transform: scaleX(1);
+}
+.header__nav a[aria-current="page"]:hover { color: var(--crimson-deep); }
+.header__nav a[aria-current="page"]:hover::after { background: var(--crimson-deep); }
+
 .header__cta { flex: 0 0 auto; }
 .header__nav .nav-cta { display: none; }
+
+/* Pod otwartym menu strona nie przewija się razem z nim. */
+html.is-nav-open { overflow: hidden; }
 
 .nav-toggle {
   display: none;
@@ -1266,6 +1279,7 @@ h1, h2, h3, h4, h5 {
 /* Przeglądarki bez backdrop-filter dostają zwykłe, nieprzezroczyste tło. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .cookie { background: #fff; }
+  .header__nav { background: #fff; }
 }
 
 /* ------------------------------------------------------------- animacje -- */
@@ -1319,25 +1333,38 @@ h1, h2, h3, h4, h5 {
 @media (max-width: 860px) {
   :root { --header-h: 68px; }
 
+  /* Menu zajmuje cały ekran pod belką i ma to samo tło co belka: biel 82%
+     z rozmyciem tego, co pod spodem.
+
+     Dlaczego `absolute`, a nie `fixed`: .header ma `backdrop-filter`, a to
+     tworzy blok zawierający dla potomków `position: fixed`, więc fixed
+     liczyłby się od belki, nie od okna. Belka jest sticky, czyli przy
+     otwartym menu i tak stoi przy górnej krawędzi, więc absolute od niej
+     daje dokładnie ten sam efekt i nie zależy od tej pułapki. */
   .header__nav {
     position: absolute;
     left: 0; right: 0; top: 100%;
-    background: var(--surface);
-    border-bottom: 1px solid var(--line);
-    box-shadow: var(--sh-2);
-    padding: 8px var(--gutter) 24px;
+    height: calc(100vh - var(--header-h));
+    height: calc(100svh - var(--header-h));
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    padding: 8px var(--gutter) calc(24px + env(safe-area-inset-bottom));
     display: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
-  .header__nav.is-open { display: block; }
+  .header__nav.is-open { display: flex; flex-direction: column; }
   .header__nav ul { flex-direction: column; align-items: stretch; gap: 0; }
   .header__nav li { border-bottom: 1px solid var(--line); }
   .header__nav li:last-child { border-bottom: 0; }
-  .header__nav a { display: block; padding: 16px 0; font-size: 0.875rem; }
+  .header__nav a { display: block; padding: 18px 0; font-size: 0.9375rem; }
   .header__nav a::after { display: none; }
 
   .nav-toggle { display: inline-flex; }
   .header__cta { display: none; }
-  .header__nav .nav-cta { display: block; margin-top: 16px; }
+  /* Przy pełnym ekranie CTA idzie na sam dół, a nie tuż pod ostatnią pozycją. */
+  .header__nav .nav-cta { display: block; margin-top: auto; padding-top: 24px; }
   .header__nav .nav-cta .btn { width: 100%; }
 
   .hero__grid { grid-template-columns: 1fr; gap: 28px; }
