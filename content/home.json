@@ -135,7 +135,7 @@
       },
       "divider": "lub",
       "secondary": {
-        "label": "Wypełnij formularz zgłoszenia pacjenta",
+        "label": "Zgłoś pacjenta",
         "href": "/formularz-zgloszeniowy-do-hospicjum-domowego/"
       }
     }
