@@ -2,7 +2,7 @@
 
 Rzeczy, które interesują osobę pracującą z kodem, a nie odwiedzającego stronę.
 Krótkie „jak zacząć" jest w [README](../README.md).
-Dziennik przepisania strony leży poza repozytorium, w `prywatne/DECYZJE.md`.
+Dziennik przepisania strony leży poza repozytorium, w `prywatne/STRONA-V1.md`.
 
 ---
 
