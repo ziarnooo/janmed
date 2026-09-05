@@ -15,7 +15,7 @@ import re
 import shutil
 import sys
 from datetime import date
-from urllib.parse import quote
+from urllib.parse import parse_qsl, quote
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(ROOT, "dist")
@@ -958,8 +958,7 @@ def apply_block(j, depth):
             r.get("param_position", "stanowisko"): j.get("position") or j["title"],
             r.get("param_place", "lokalizacja"): (job_places(j) or [""])[0],
         }
-        src = esc(embed + ("&" if "?" in embed else "?") + "&".join(
-            "%s=%s" % (quote(k), quote(v)) for k, v in params.items() if v))
+        src = esc(tally_src(embed, params))
         intro = esc(r.get("intro", ""))
         form = f"""<iframe data-tally-src="{src}" loading="lazy" width="100%"
                 height="640" frameborder="0"
@@ -1144,6 +1143,33 @@ def build_job(j):
         head_extra=schema_job(j), body=body))
 
 
+# Wspólny zestaw parametrów osadzenia dla OBU formularzy. Trzymamy go tutaj,
+# a nie w adresie wklejanym do content/site.json, bo inaczej formularze rozjeżdżają
+# się wyglądem - dokładnie to się stało: rekrutacyjny nie miał `alignLeft`
+# ani `transparentBackground`, więc Tally centrowało treść, dokładało boczny
+# margines i malowało własne białe tło na naszej karcie.
+TALLY_PARAMS = {
+    "alignLeft": "1",              # bez tego treść jest wyśrodkowana i ma boczny margines
+    "hideTitle": "1",
+    "transparentBackground": "1",  # bez tego ramka maluje własną biel na karcie
+    "dynamicHeight": "1",          # wysokość ramki rośnie z treścią, bez suwaka w środku
+    "formEventsForwarding": "1",   # kroki i wysyłka lecą do analityki przez postMessage
+}
+
+
+def tally_src(base, extra=None):
+    """Adres osadzenia Tally z jednakowym zestawem parametrów dla obu formularzy.
+    Cokolwiek jest w adresie z site.json, nasze parametry mają pierwszeństwo."""
+    head, _, query = base.partition("?")
+    params = dict(parse_qsl(query))
+    params.update(TALLY_PARAMS)
+    for k, v in (extra or {}).items():
+        if v:
+            params[k] = v
+    return head + "?" + "&".join("%s=%s" % (quote(k), quote(str(v)))
+                                 for k, v in params.items())
+
+
 TALLY_BOOTSTRAP = """<script src="https://tally.so/widgets/embed.js" defer></script>
 <script>
 // Zapasowe wczytanie, gdyby skrypt Tally nie zdazyl podmienic src (adblock, wolna siec).
@@ -1168,7 +1194,7 @@ def build_form():
     <div class="container">
       <h1 class="form-page__title">Zgłoszenie pacjenta do hospicjum domowego</h1>
       <div class="form-embed" data-form="zgloszenie">
-        <iframe data-tally-src="https://tally.so/embed/5B4vYb?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1&amp;dynamicHeight=1"
+        <iframe data-tally-src="{esc(tally_src("https://tally.so/embed/5B4vYb"))}"
                 loading="lazy" width="100%" height="600" frameborder="0"
                 title="Formularz zgłoszeniowy do Hospicjum Domowego"></iframe>
         <noscript>
