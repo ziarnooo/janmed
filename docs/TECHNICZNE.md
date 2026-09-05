@@ -25,6 +25,32 @@ w artefakcie - bez tego kolejny deploy skasowałby ustawienie własnej domeny.
 3. Settings → Pages → Custom domain: `janmed.pl`, zaznacz *Enforce HTTPS*.
 4. Dopiero po przepięciu wyłącz stary hosting.
 
+### Gdy w przeglądarce wraca stara strona
+
+Objaw: strona przez chwilę działała, a potem znowu pokazuje wersję
+z WordPressa. Najpierw sprawdź, czy to w ogóle dotyczy serwera:
+
+```
+dig +short janmed.pl        # ma dać 185.199.108-111.153
+dig +short www.janmed.pl    # ma dać <użytkownik>.github.io
+curl -sI https://janmed.pl/ | head -3
+```
+
+Jeśli DNS jest poprawny, a ostatni run `Build & deploy` jest zielony,
+serwer podaje nową stronę i rzecz siedzi po stronie przeglądarki:
+
+* **service worker po starym serwisie** - żył pod tą samą domeną i podaje
+  zapisaną kopię starej strony. `templates/base.html` wyrejestrowuje go
+  i czyści Cache Storage przy pierwszej wizycie, która dotarła do nowej
+  strony. Podgląd: *DevTools → Application → Service Workers*.
+* **zwykły cache HTTP** - stary hosting mógł podać długi `max-age`.
+  Znika po twardym odświeżeniu (Cmd/Ctrl+Shift+R) albo w oknie prywatnym.
+* **cache DNS na komputerze lub routerze** - okno prywatne tego nie omija;
+  sprawdź na innym urządzeniu i w sieci komórkowej.
+
+Okno prywatne albo inne urządzenie rozdziela te przypadki od problemu
+z serwerem: jeśli tam jest nowa strona, serwer jest w porządku.
+
 ---
 
 ## Google Analytics

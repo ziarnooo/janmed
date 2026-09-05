@@ -26,6 +26,27 @@
 <link rel="stylesheet" href="{{root}}css/styles.css">
 {{head_extra}}
 <script>document.documentElement.classList.remove('no-js');</script>
+<script>
+/* Sprzątanie po WordPressie. Stary serwis zostawiał w przeglądarce service
+   workera i własny Cache Storage; po przepięciu domeny na Pages ten worker
+   nadal odpowiadał zapisaną kopią, więc część osób widziała starą stronę
+   mimo poprawnego DNS-u i zielonego deploya. Wyrejestrowujemy go przy
+   pierwszej wizycie, która dotarła do nowej strony. */
+(function () {
+  try {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations()
+        .then(function (rs) { rs.forEach(function (r) { r.unregister(); }); })
+        .catch(function () {});
+    }
+    if (window.caches && caches.keys) {
+      caches.keys()
+        .then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); })
+        .catch(function () {});
+    }
+  } catch (e) {}
+}());
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Przejdź do treści</a>
