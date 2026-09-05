@@ -33,44 +33,6 @@ Informacja i rejestracja 8:00-15:00 · [biuro@janmed.pl](mailto:biuro@janmed.pl)
 
 ---
 
-## O tym repozytorium
-
-Tu mieszka kod strony [janmed.pl](https://janmed.pl). Strona jest statyczna
-i napisana ręcznie: treść w markdownie, generator w czystym Pythonie,
-wynik na GitHub Pages. Bez frameworka, bez `node_modules`, bez systemu
-zarządzania treścią.
-
-Nie jest to wybór ideologiczny. Strona hospicjum ma się otwierać u kogoś,
-kto właśnie wyszedł ze szpitala i szuka pomocy z telefonu, w gorszym zasięgu.
-
-| | |
-| --- | --- |
-| Strona główna, pierwsze wczytanie | **436 KB** |
-| Cały serwis | **2,3 MB** |
-| Pliki JavaScript | **2** |
-| Zależności zewnętrzne w buildzie | **0** |
-
-Poza wagą pilnujemy kilku rzeczy, które przy tej grupie odbiorców nie są
-kosmetyką:
-
-* **Kontrast.** Znaczna część odwiedzających to osoby starsze, więc kolory
-  tekstu i linków są dobrane pod WCAG, a nie pod paletę marki.
-* **Ruch.** Animacje wyłączają się przy `prefers-reduced-motion`, a bezpiecznik
-  pokazuje całą treść po 3 sekundach niezależnie od tego, czy skrypt zadziałał.
-  Treść na stronie hospicjum nie ma prawa zostać niewidoczna.
-* **Prywatność.** Kroje pisma hostujemy u siebie, odtwarzacz wideo leci
-  z `dnt=1` i powstaje dopiero po pierwszym malowaniu strony.
-* **Czytelność dla asystentów AI.** Serwis wystawia `llms.txt`, `llms-full.txt`
-  i bliźniaczą wersję każdej podstrony w markdownie. Rodzina szukająca
-  hospicjum coraz częściej pyta czat, nie wyszukiwarkę.
-
-Dokumentacja techniczna: [`docs/TECHNICZNE.md`](docs/TECHNICZNE.md).
-System wizualny: [`docs/design.md`](docs/design.md) plus storybook
-[`docs/design.html`](docs/design.html), który czyta produkcyjny arkusz stylów,
-więc nie może się z nim rozjechać.
-
----
-
 <div align="center">
 
 JANMED Sp. z o. o. 2010-2026

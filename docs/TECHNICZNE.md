@@ -79,6 +79,41 @@ i retencji - nie o kodzie. Inwentarz pól i szkic migracji:
 
 ---
 
+## Strona po wysłaniu: `/sukces/`
+
+Jedna strona podziękowania dla obu formularzy, pod `/sukces/`. Treść jest
+celowo neutralna („omówić dalsze kroki", bez słowa „opieki" i bez „rekrutacji"),
+żeby pasowała do zgłoszenia pacjenta i do aplikacji o pracę. Pod spodem stoi
+ten sam baner wsparcia co na pozostałych stronach. Strona jest `noindex`
+i nie ma jej w mapie serwisu.
+
+### Co ustawić raz w Tally
+
+W każdym formularzu: *Settings → After submission → Redirect to page*
+i adres z parametrem, który mówi, skąd przyszła wysyłka:
+
+| Formularz | Adres przekierowania |
+| --- | --- |
+| Zgłoszenie pacjenta | `https://janmed.pl/sukces/?rodzaj=zgloszenie` |
+| Aplikacja o pracę | `https://janmed.pl/sukces/?rodzaj=rekrutacja` |
+
+Przy aplikacji można dokleić jeszcze `&oferta=<slug>`, jeśli Tally umie przepuścić
+pole ukryte do adresu przekierowania - wtedy w GA4 widać, po której ofercie
+ktoś zaaplikował.
+
+### Dlaczego parametr, a nie dwie strony
+
+Zdarzenie `form_submit` przychodziło dotąd z Tally przez `postMessage`. Po
+włączeniu przekierowania strona z formularzem znika, zanim zdarzenie zdąży
+polecieć, więc `js/analytics.js` wysyła je teraz z `/sukces/`, czytając `rodzaj`
+i `oferta` z adresu. Znacznik w `sessionStorage` pilnuje, żeby nie policzyć
+tej samej wysyłki dwa razy, gdyby Tally jednak zdążyło wysłać `postMessage`
+przed skokiem.
+
+Bez parametru w adresie zdarzenie i tak poleci, ale z `rodzaj=nieznany`.
+
+---
+
 ## Formularz aplikacyjny (rekrutacja)
 
 Oferty pracy mieszkają w `content/jobs/*.md`, lista pod `/praca/`, każda oferta

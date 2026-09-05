@@ -1189,6 +1189,53 @@ def build_form():
         robots="noindex, follow", content_group="formularz", body=body))
 
 
+def build_sukces():
+    """Podziękowanie po wysłaniu formularza - wspólne dla zgłoszenia pacjenta
+    i aplikacji o pracę, bo obie drogi kończą się tym samym zdaniem.
+
+    Który formularz to był, wie tylko adres: Tally dokleja `?rodzaj=...`,
+    a analityka czyta to z adresu. Treść celowo nie mówi ani „opieki",
+    ani „rekrutacji" - ma pasować do jednego i do drugiego."""
+    d = 1
+    loc = SITE["locations"][0]
+    body = f"""{header(d)}
+<main id="main" data-sukces>
+  <section class="section" style="text-align:center;padding-block:clamp(88px,12vw,150px)">
+    <div class="container">
+      <p class="sukces__mark reveal" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1.5" opacity=".35"/>
+          <path d="M15 24.5 21.5 31 33 18" stroke="currentColor" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </p>
+      <p class="kicker reveal">Formularz wysłany</p>
+      <h1 class="h-section reveal">Dziękujemy za zgłoszenie</h1>
+      <p class="lede reveal" style="margin:20px auto 34px;max-width:46ch">
+        Skontaktujemy się z Państwem w możliwie najkrótszym czasie,
+        aby omówić dalsze kroki.
+      </p>
+      <p class="reveal" style="margin:0 0 34px;color:var(--muted)">
+        W sprawach pilnych prosimy o kontakt telefoniczny:
+        <a class="phone" href="{esc(loc['phone_href'])}">{esc(loc['phone'])}</a>
+      </p>
+      <div class="btn-row reveal" style="justify-content:center">
+        <a class="btn btn--ghost" href="{esc(link('/', d))}">Wróć na stronę główną</a>
+        <a class="btn btn--ghost" href="{esc(link('/baza-wiedzy/', d))}">Baza wiedzy</a>
+      </div>
+    </div>
+  </section>
+  {support_section(d)}
+</main>
+{footer(d)}
+{cookie_notice(d)}"""
+    write("sukces/index.html", page(
+        depth=d, title="Dziękujemy za zgłoszenie • Hospicjum Domowe JANMED",
+        description="Formularz został wysłany. Skontaktujemy się w możliwie najkrótszym czasie.",
+        canonical=SITE["url"] + "/sukces/",
+        robots="noindex, follow", content_group="sukces", body=body))
+
+
 def build_404():
     d = 0
     body = f"""{header(d)}
@@ -1582,18 +1629,6 @@ def build_sitemap():
 
 # --------------------------------------------------------------------------
 
-def copy_drafts():
-    """Makiety robocze - tylko lokalnie (`python3 build.py --drafts`).
-    Nie trafiają do artefaktu CI, więc nie ma jak przypadkiem ich opublikować."""
-    src = os.path.join(ROOT, "drafts")
-    if os.path.isdir(src):
-        shutil.copytree(src, os.path.join(OUT, "_drafts"))
-    doc = os.path.join(ROOT, "docs", "design.html")
-    if os.path.isfile(doc):
-        write("_drafts/design.html", read("docs/design.html"))
-    print("uwaga: dołączono drafts/ i docs/design.html → dist/_drafts/ (tylko podgląd lokalny)")
-
-
 def copy_static():
     for d in ("assets", "css", "js"):
         src, dst = os.path.join(ROOT, d), os.path.join(OUT, d)
@@ -1610,8 +1645,6 @@ def main():
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     copy_static()
-    if "--drafts" in sys.argv:
-        copy_drafts()
     build_home()
     build_baza()
     build_kontakt()
@@ -1623,6 +1656,7 @@ def main():
     for slug in ("polityka-prywatnosci", "pliki-cookies"):
         build_page(slug)
     build_form()
+    build_sukces()
     build_404()
     build_sitemap()
     build_markdown_mirrors()

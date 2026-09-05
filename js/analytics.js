@@ -105,9 +105,41 @@
           formTrack("form_start", {});
         }
       } else if (data.event === "Tally.FormSubmitted") {
+        markSubmitted();
         formTrack("form_submit", {});
       }
     });
+  }
+
+  /* ------------------------------------------------ /sukces/ po wysyłce -- */
+
+  /* Gdy Tally ma ustawione przekierowanie, wysyłka kończy się na /sukces/,
+     a nie komunikatem w ramce. Zdarzenie musi wtedy polecieć stąd, bo strony
+     z formularzem już nie ma. Rodzaj formularza przychodzi w adresie:
+     /sukces/?rodzaj=zgloszenie albo ?rodzaj=rekrutacja&oferta=<slug>.
+
+     Znacznik w sessionStorage pilnuje, żeby nie policzyć wysyłki dwa razy,
+     gdyby Tally zdążyło jeszcze wysłać `Tally.FormSubmitted` przed skokiem. */
+  var SUBMIT_KEY = "janmed:submitted";
+
+  function markSubmitted() {
+    try { sessionStorage.setItem(SUBMIT_KEY, String(Date.now())); } catch (e) {}
+  }
+
+  function submittedRecently() {
+    try {
+      var t = Number(sessionStorage.getItem(SUBMIT_KEY) || 0);
+      if (!t) return false;
+      sessionStorage.removeItem(SUBMIT_KEY);
+      return Date.now() - t < 60000;
+    } catch (e) { return false; }
+  }
+
+  if (document.querySelector("[data-sukces]") && !submittedRecently()) {
+    var q = new URLSearchParams(location.search);
+    var done = { rodzaj: q.get("rodzaj") || "nieznany" };
+    if (q.get("oferta")) done.oferta = q.get("oferta");
+    track("form_submit", done);
   }
 
   /* ------------------------------------------- czytelność artykułu 75% -- */

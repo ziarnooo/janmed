@@ -25,8 +25,8 @@ warnings = []
 
 def pages():
     for f in glob.glob(os.path.join(DIST, "**", "*.html"), recursive=True):
-        if os.sep + "_probe" + os.sep in f or os.sep + "_drafts" + os.sep in f:
-            continue  # makiety robocze nie jadą na produkcję
+        if os.sep + "_probe" + os.sep in f:
+            continue  # sondy robocze nie jadą na produkcję
         yield f
 
 

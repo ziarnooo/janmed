@@ -1407,3 +1407,18 @@ html.is-nav-open { overflow: hidden; }
   .cookie p { font-size: 0.75rem; line-height: 1.5; }
   .cookie .btn { margin-left: 0; width: 100%; }
 }
+
+/* ------------------------------------------------------------- sukces -- */
+
+/* Potwierdzenie po wysłaniu formularza. Znacznik jest cichy: cienki okrąg
+   i ptaszek w kolorze marki, bez zieleni i bez ikony w kółku na pół ekranu -
+   to strona hospicjum, a nie potwierdzenie zamówienia. */
+.sukces__mark {
+  margin: 0 0 26px;
+  color: var(--blue);
+}
+.sukces__mark svg {
+  width: 48px;
+  height: 48px;
+  margin-inline: auto;
+}
