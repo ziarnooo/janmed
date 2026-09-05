@@ -501,7 +501,7 @@ def page(**kw):
         "canonical": esc(kw["canonical"]),
         "robots": kw.get("robots", "index, follow, max-image-preview:large"),
         "og_type": kw.get("og_type", "website"),
-        "og_image": esc(kw.get("og_image") or (SITE["url"] + "/assets/img/logo_ql.jpg")),
+        "og_image": esc(kw.get("og_image") or (SITE["url"] + "/assets/img/og-default.jpg")),
         "meta_extra": kw.get("meta_extra", ""),
         "root": rel(depth),
         "head_extra": kw.get("head_extra", ""),

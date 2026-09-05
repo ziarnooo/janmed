@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5 {
   padding: 0;
 }
 
-.header__nav a {
+.header__nav ul a {
   font-family: "Poppins", sans-serif;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -280,7 +280,7 @@ h1, h2, h3, h4, h5 {
   position: relative;
   padding-block: 6px;
 }
-.header__nav a::after {
+.header__nav ul a::after {
   content: "";
   position: absolute;
   left: 0; right: 0; bottom: 0;
@@ -290,18 +290,18 @@ h1, h2, h3, h4, h5 {
   transform-origin: left;
   transition: transform var(--dur) var(--ease);
 }
-.header__nav a:hover { color: var(--blue); }
-.header__nav a:hover::after { transform: scaleX(1); }
+.header__nav ul a:hover { color: var(--blue); }
+.header__nav ul a:hover::after { transform: scaleX(1); }
 
 /* Bieżąca sekcja. Kolor CTA plus grubszy rysunek liter - dwa sygnały zamiast
    jednego, bo sam kolor gubi się przy zaburzeniach widzenia barw. */
-.header__nav a[aria-current="page"] { color: var(--crimson); font-weight: 600; }
-.header__nav a[aria-current="page"]::after {
+.header__nav ul a[aria-current="page"] { color: var(--crimson); font-weight: 600; }
+.header__nav ul a[aria-current="page"]::after {
   background: var(--crimson);
   transform: scaleX(1);
 }
-.header__nav a[aria-current="page"]:hover { color: var(--crimson-deep); }
-.header__nav a[aria-current="page"]:hover::after { background: var(--crimson-deep); }
+.header__nav ul a[aria-current="page"]:hover { color: var(--crimson-deep); }
+.header__nav ul a[aria-current="page"]:hover::after { background: var(--crimson-deep); }
 
 .header__cta { flex: 0 0 auto; }
 .header__nav .nav-cta { display: none; }
@@ -1326,6 +1326,10 @@ html.is-nav-open { overflow: hidden; }
   .article-layout { grid-template-columns: 1fr; }
   .aside { position: static; max-width: 520px; }
   .footer__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Na wąskim ekranie najpierw adresy, logotypy na końcu - po adres schodzi
+     się na dół strony, a logotyp jest podpisem, nie nagłówkiem. */
+  .footer__brand { order: 1; }
 }
 
 @media (max-width: 900px) {
@@ -1339,6 +1343,10 @@ html.is-nav-open { overflow: hidden; }
 
 @media (max-width: 860px) {
   :root { --header-h: 68px; }
+
+  /* Na wąskim ekranie pod belką częściej stoi ciemne hero niż na desktopie,
+     więc biel 82% czytała się jako szarość. Nadal prześwituje i rozmywa. */
+  .header { background: rgba(255, 255, 255, 0.92); }
 
   /* Menu zajmuje cały ekran pod belką i ma to samo tło co belka: biel 82%
      z rozmyciem tego, co pod spodem.
@@ -1370,13 +1378,13 @@ html.is-nav-open { overflow: hidden; }
   .header__nav ul { flex-direction: column; align-items: stretch; gap: 0; }
   .header__nav li { border-bottom: 1px solid var(--line); }
   .header__nav li:last-child { border-bottom: 0; }
-  .header__nav a { display: block; padding: 18px 0; font-size: 0.9375rem; }
-  .header__nav a::after { display: none; }
+  .header__nav ul a { display: block; padding: 18px 0; font-size: 0.9375rem; }
+  .header__nav ul a::after { display: none; }
 
   .nav-toggle { display: inline-flex; }
   .header__cta { display: none; }
-  /* Przy pełnym ekranie CTA idzie na sam dół, a nie tuż pod ostatnią pozycją. */
-  .header__nav .nav-cta { display: block; margin-top: auto; padding-top: 24px; }
+  /* CTA stoi bezpośrednio pod ostatnią pozycją listy. */
+  .header__nav .nav-cta { display: block; margin-top: 24px; }
   .header__nav .nav-cta .btn { width: 100%; }
 
   .hero__grid { grid-template-columns: 1fr; gap: 28px; }
@@ -1398,6 +1406,27 @@ html.is-nav-open { overflow: hidden; }
   .kicker { font-size: 0.75rem; letter-spacing: 0.1em; }
   .hero .kicker { letter-spacing: 0.1em; }
   .footer__top { grid-template-columns: 1fr; }
+
+  /* Logotypy w jednej linii: JANMED przy lewej krawędzi, NFZ przy prawej. */
+  .footer__brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 8px;
+  }
+  .footer__nfz { margin-top: 0; }
+
+  /* Każdy punkt paska zaufania zaczyna własną linię - przy czterech pozycjach
+     zawijanie układało je po dwie i pasek robił się nieczytelny. */
+  .hero__trust .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* Logo NFZ na środku i ciszej - przy lewej krawędzi wyglądało jak sierota. */
+  .nfz-link { width: 100%; justify-content: center; opacity: 0.62; }
   .btn { width: auto; }
   .btn-row .btn { flex: 1 1 100%; }
   .card--form .actions { flex-direction: column; align-items: stretch; }
