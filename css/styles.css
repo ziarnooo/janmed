@@ -1422,3 +1422,13 @@ html.is-nav-open { overflow: hidden; }
   height: 48px;
   margin-inline: auto;
 }
+
+/* Prośba o wsparcie stoi nad zgięciem, bo baner niżej i tak zobaczy niewielu.
+   Powrót na stronę główną jest pod nią i celowo cichszy - kto tu trafił,
+   ma przed sobą jedną decyzję, a nie dwie równorzędne. */
+.sukces__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}

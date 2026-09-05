@@ -1200,7 +1200,7 @@ def build_sukces():
     loc = SITE["locations"][0]
     body = f"""{header(d)}
 <main id="main" data-sukces>
-  <section class="section" style="text-align:center;padding-block:clamp(88px,12vw,150px)">
+  <section class="section" id="podziekowanie" style="text-align:center;padding-block:clamp(88px,12vw,150px)">
     <div class="container">
       <p class="sukces__mark reveal" aria-hidden="true">
         <svg viewBox="0 0 48 48" fill="none">
@@ -1219,9 +1219,9 @@ def build_sukces():
         W sprawach pilnych prosimy o kontakt telefoniczny:
         <a class="phone" href="{esc(loc['phone_href'])}">{esc(loc['phone'])}</a>
       </p>
-      <div class="btn-row reveal" style="justify-content:center">
-        <a class="btn btn--ghost" href="{esc(link('/', d))}">Wróć na stronę główną</a>
-        <a class="btn btn--ghost" href="{esc(link('/baza-wiedzy/', d))}">Baza wiedzy</a>
+      <div class="sukces__actions reveal">
+        <a class="btn" href="{esc(SITE['donate_url'])}" target="_blank" rel="noopener">{esc(SITE['support_block']['button'])}</a>
+        <a class="btn btn--ghost btn--sm" href="{esc(link('/', d))}">Wróć na stronę główną</a>
       </div>
     </div>
   </section>
