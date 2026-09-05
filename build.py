@@ -1063,6 +1063,13 @@ def build_jobs_index():
 
 def build_job(j):
     d = 2
+    # Podsumowanie oferty. Na desktopie stoi raz, w kolumnie bocznej. Poniżej
+    # 1080 px kolumna zjeżdża pod tekst, więc ta sama karta idzie też przed
+    # treścią - kandydat widzi warunki i „Aplikuj" bez przewijania całej oferty.
+    summary_inner = f"""<h3>{esc(j['title'])}</h3>
+            {job_facts(j)}
+            <a class="btn" href="#aplikuj">Aplikuj</a>"""
+    summary_card = '<div class="aside__card reveal">%s</div>' % summary_inner
     others = [q for q in JOBS if q["slug"] != j["slug"]][:3]
     pub = j.get("published", "")
     meta_line = ('<p class="page-hero__meta"><time datetime="%s">Ogłoszenie z %s</time></p>'
@@ -1105,13 +1112,10 @@ def build_job(j):
 
     <section class="section section--flush">
       <div class="container article-layout">
+        <div class="aside__card aside__card--lead reveal">{summary_inner}</div>
         <div class="prose">{markdown(j['body'], lambda x: asset('assets/img/' + x, d), lambda h: link(h, d))}</div>
         <aside class="aside">
-          <div class="aside__card reveal">
-            <h3>{esc(j['title'])}</h3>
-            {job_facts(j)}
-            <a class="btn" href="#aplikuj">Aplikuj</a>
-          </div>
+          {summary_card}
           <div class="aside__card reveal">
             <h3>Masz pytanie?</h3>
             <ol style="list-style:none;padding:0;margin-bottom:18px">
