@@ -221,6 +221,11 @@ h1, h2, h3, h4, h5 {
 .btn--ghost-light { --btn-bg: transparent; --btn-fg: #fff; --btn-bd: rgba(255,255,255,.5); }
 .btn--ghost-light:hover { --btn-bg: #fff; --btn-fg: var(--ink); --btn-bd: #fff; color: var(--ink); }
 
+/* Wyjście drugiego wyboru: sam tekst, bez ramki i bez tła. Używane tam,
+   gdzie obok stoi jedna wyraźna decyzja i nic nie ma z nią konkurować. */
+.btn--bare { --btn-bg: transparent; --btn-fg: var(--muted); --btn-bd: transparent; }
+.btn--bare:hover { --btn-bg: transparent; --btn-fg: var(--ink); color: var(--ink); }
+
 .btn--blue { --btn-bg: var(--blue); }
 .btn--blue:hover { --btn-bg: #21536b; }
 

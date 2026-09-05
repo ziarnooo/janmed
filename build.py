@@ -1221,11 +1221,10 @@ def build_sukces():
       </p>
       <div class="sukces__actions reveal">
         <a class="btn" href="{esc(SITE['donate_url'])}" target="_blank" rel="noopener">{esc(SITE['support_block']['button'])}</a>
-        <a class="btn btn--ghost btn--sm" href="{esc(link('/', d))}">Wróć na stronę główną</a>
+        <a class="btn btn--bare btn--sm" href="{esc(link('/', d))}">Wróć na stronę główną</a>
       </div>
     </div>
   </section>
-  {support_section(d)}
 </main>
 {footer(d)}
 {cookie_notice(d)}"""
